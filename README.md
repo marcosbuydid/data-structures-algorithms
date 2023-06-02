@@ -13,3 +13,6 @@ You will find different proyects with a specific topic to practice or learn.
 
 ### Essentials
 Contains various examples about arrays, structures, pointers, functions and more.
+
+### Recursion
+Contains basic examples about recursion.
