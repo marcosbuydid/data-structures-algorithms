@@ -1,2 +1,4 @@
 ﻿  LinkedList.cpp
+c:\users\marcos\documents\data-structures-algorithms\proyects\linkedlist\linkedlist.cpp(124): warning C4715: 'searchNode': not all control paths return a value
+c:\users\marcos\documents\data-structures-algorithms\proyects\linkedlist\linkedlist.cpp(134): warning C4715: 'searchNodeRecursively': not all control paths return a value
   LinkedList.vcxproj -> C:\Users\marcos\Documents\data-structures-algorithms\Proyects\Debug\LinkedList.exe
