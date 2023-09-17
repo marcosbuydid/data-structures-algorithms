@@ -17,7 +17,6 @@ void headRecursion(int n) {
 	}
 }
 
-//another example
 int recursionExample(int n) {
 	if (n > 0) {
 		return recursionExample(n - 1) + n;
@@ -25,6 +24,12 @@ int recursionExample(int n) {
 	return 0;
 }
 
+/*
+* In this example is important take into account that
+* x value will be constant and its value will be the last
+* obtained in the last function.
+* In this example x = 5
+*/
 int recursionWithStaticVariable(int n) {
 	static int x = 0;
 	if (n > 0) {
@@ -32,15 +37,11 @@ int recursionWithStaticVariable(int n) {
 		return recursionWithStaticVariable(n - 1) + x;
 	}
 	return 0;
-	//In this example is important take into account that
-	//x value will be constant and its value will be the last
-	//obtained in the last function.
-	//In this example x = 5
 }
 
-
-//example factorial of 3
-//equal to 3*2*1=6
+/*
+* example factorial of 3 equal to 3*2*1=6
+*/
 int factorial(int n) {
 	if (n == 0) {
 		return 1;
