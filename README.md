@@ -14,5 +14,8 @@ You will find different proyects with a specific topic to practice or learn.
 ### Essentials
 Contains various examples about arrays, structures, pointers, functions and more.
 
+### Linked List
+Contains multiple algorithms of how to operate with linked lists.
+
 ### Recursion
 Contains basic examples about recursion.

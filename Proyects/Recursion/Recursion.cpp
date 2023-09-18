@@ -19,7 +19,7 @@ void headRecursion(int n) {
 
 int recursionExample(int n) {
 	if (n > 0) {
-		return recursionExample(n - 1) + n;
+		return n + recursionExample(n - 1);
 	}
 	return 0;
 }
@@ -34,7 +34,7 @@ int recursionWithStaticVariable(int n) {
 	static int x = 0;
 	if (n > 0) {
 		x++;
-		return recursionWithStaticVariable(n - 1) + x;
+		return x + recursionWithStaticVariable(n - 1);
 	}
 	return 0;
 }
@@ -46,7 +46,7 @@ int factorial(int n) {
 	if (n == 0) {
 		return 1;
 	}
-	return factorial(n - 1) * n;
+	return n * factorial(n - 1);
 }
 
 int main()
