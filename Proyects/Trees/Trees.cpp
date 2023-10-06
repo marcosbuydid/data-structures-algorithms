@@ -158,6 +158,27 @@ void printRange(NodeAB* t, int min, int max) {
 	}
 }
 
+NodeAB* rangeCopy(NodeAB* a, int inf, int sup) {
+	if (a == NULL) {
+		return NULL;
+	}
+	NodeAB* result = NULL;
+
+	if (a->data > inf && a->data < sup) {
+		result = new NodeAB();
+		result->data = a->data;
+		result->left = rangeCopy(a->left, inf, sup);
+		result->right = rangeCopy(a->right, inf, sup);
+		return result;
+	}
+	if (inf < a->data || sup < a->data) {
+		rangeCopy(a->left, inf, sup);
+	}
+	else if (inf > a->data || sup > a->data) {
+		rangeCopy(a->right, inf, sup);
+	}
+}
+
 
 int main() {
 
@@ -171,7 +192,9 @@ int main() {
 	//postOrder(root);
 	//cout << minLevelK(root, 2);
 	//cout << maxNode(root);
-	printRange(root, 3, 9);
-
+	//printRange(root, 3, 9);
+	NodeAB* result = rangeCopy(root, 1, 12);
+	preOrder(result);
+	
 	return 0;
 }

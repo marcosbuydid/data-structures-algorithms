@@ -31,7 +31,7 @@ NodeList* createLinkedList(int A[], int n) {
 
 void displayNodeListData(NodeList* l) {
 
-	while (l->next != NULL) {
+	while (l != NULL) {
 		printf("%d \n", l->data);
 		l = l->next;
 	}
@@ -39,7 +39,7 @@ void displayNodeListData(NodeList* l) {
 
 void displayNodeListDataRec(NodeList* l) {
 
-	if (l->next != NULL) {
+	if (l != NULL) {
 		printf("%d \n", l->data);
 		displayNodeListDataRec(l->next);
 	}
@@ -66,7 +66,7 @@ int nodeCounterRec(NodeList* l) {
 		return 0;
 	}
 	else {
-		return 1+ nodeCounterRec(l->next);
+		return 1 + nodeCounterRec(l->next);
 	}
 }
 
@@ -157,10 +157,10 @@ NodeList* searchNodeRec(NodeList* l, int number) {
 
 void insertNodeAtFront(NodeList*& l, int number) {
 
-		NodeList* node = new NodeList();
-		node->data = number;
-		node->next = l;
-		l = node;
+	NodeList* node = new NodeList();
+	node->data = number;
+	node->next = l;
+	l = node;
 }
 
 void insertNodeAtPosition(NodeList*& list, int number, int pos) {
@@ -258,7 +258,7 @@ NodeList* eraseRangeRec(NodeList*& list, int startPos, int finalPos) {
 		eraseRangeRec(list, startPos, finalPos - 1);
 	}
 	else {
-		eraseRangeRec(list->next, startPos-1, finalPos - 1);
+		eraseRangeRec(list->next, startPos - 1, finalPos - 1);
 	}
 	return list;
 }
@@ -288,6 +288,48 @@ NodeList* arrayToList(int* a, unsigned int n) {
 	}
 }
 
+NodeList* commons(NodeList* l1, NodeList* l2) {
+	NodeList* result = NULL;
+
+	if (l1 == NULL || l2 == NULL) {
+		return result;
+	}
+	else {
+		while (l1 != NULL && l2 != NULL) {
+			if (l1->data == l2->data) {
+				insertNodeAtFront(result, l1->data);
+				l1 = l1->next;
+				l2 = l2->next;
+			}
+			else if (l1->data < l2->data) {
+				l1 = l1->next;
+			}
+			else {
+				l2 = l2->next;
+			}
+		}
+	}
+	return result;
+}
+
+void difference(NodeList*& l1, NodeList* l2) {
+	if (l1 == NULL || l2 == NULL) {
+		return;
+	}
+	while (l1->next != NULL && l2->next != NULL) {
+		if (l1->data == l2->data) {
+			deleteNode(l1, l1->data);
+			l2 = l2->next;
+		}
+		else if (l1->data < l2->data) {
+			l1 = l1->next;
+		}
+		else {
+			l2 = l2->next;
+		}
+	}
+}
+
 int main() {
 
 	int A[] = { 2,1,6,3,30,52,14,26 };
@@ -299,8 +341,20 @@ int main() {
 	int C[] = { 1,2,3,4,5,6,7,8 };
 	NodeList* listTwo = createLinkedList(C, 8);
 
+	int D[] = { 1,3,4,8 };
+	NodeList* listThree = createLinkedList(D, 4);
+
+	int E[] = { 1,2,4,6,7,8,9 };
+	NodeList* listFour = createLinkedList(E, 7);
+
+	int F[] = { 1,3,4,8,10 };
+	NodeList* listFive = createLinkedList(F, 5);
+
+	int G[] = { 1,2,5,8,9,13 };
+	NodeList* listSix = createLinkedList(G, 6);
+
 	int* p = A;
- 
+
 	//displayNodeListDataRec(list);
 	//cout << nodeCounter(list);
 	//cout << nodeCounterRec(list);
@@ -316,9 +370,11 @@ int main() {
 	//displayNodeListData(sortedList);
 	//NodeList* auxList = eraseRange(listTwo, 2, 5);
 	//NodeList* auxList = eraseRangeRec(listTwo, 2, 5);
-	NodeList* auxList = arrayToList(p, 8);
-	displayNodeListData(auxList);
-	
+	//NodeList* auxList = arrayToList(p, 8);
+	//NodeList* result = commons(listThree, listFour);
+	difference(listFive, listSix);
+	//displayNodeListData(result);
+
 
 	return 0;
 }
