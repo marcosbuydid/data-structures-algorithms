@@ -1,4 +1,7 @@
 ﻿  LinkedList.cpp
-C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\LinkedList\LinkedList.cpp(156): warning C4715: 'searchNodeRecursively': no todas las rutas de acceso de control devuelven un valor
-C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\LinkedList\LinkedList.cpp(145): warning C4715: 'searchNode': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\LinkedList\LinkedList.cpp(283,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\LinkedList\LinkedList.cpp(339,30): warning C4018: '>=': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\LinkedList\LinkedList.cpp(344,11): warning C4018: '>': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\LinkedList\LinkedList.cpp(345,13): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\LinkedList\LinkedList.cpp(157): warning C4715: 'searchNodeRec': no todas las rutas de acceso de control devuelven un valor
   LinkedList.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\LinkedList.exe
