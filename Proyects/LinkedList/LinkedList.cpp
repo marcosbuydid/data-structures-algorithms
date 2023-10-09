@@ -242,8 +242,10 @@ NodeList* eraseRange(NodeList*& list, int startPos, int finalPos) {
 					startPos++;
 				}
 			}
-			insertNodeAtLast(result, list->data);
-			list = list->next;
+			if (list != NULL) {
+				insertNodeAtLast(result, list->data);
+				list = list->next;
+			}
 			posAux++;
 		}
 		return result;
@@ -387,7 +389,7 @@ int main() {
 	//cout << nodeDataSumRec(list);
 	//cout << maxNode(list);
 	//cout << maxNodeRec(list);
-	//cout << searchNode(list, 140);
+	//cout << searchNode(list, 14);
 	//cout << searchNodeRec(list, 14);
 	//insertNodeAtPosition(list, 20, 7);
 	//insertNodeInSortedList(sortedList, 4);
@@ -398,7 +400,7 @@ int main() {
 	//NodeList* result = commons(listThree, listFour);
 	//difference(listFive, listSix);
 	deleteFrom(listSeven, 3);
-	//displayNodeListData(result);
+	//displayNodeListData(auxList);
 
 
 	return 0;
