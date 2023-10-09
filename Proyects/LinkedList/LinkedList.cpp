@@ -19,7 +19,7 @@ NodeList* createLinkedList(int A[], int n) {
 	first->next = NULL;
 	last = first;
 
-	for (int i = 1; i <= n; i++) {
+	for (int i = 1; i < n; i++) {
 		temp = (struct NodeList*)malloc(sizeof(struct NodeList));
 		temp->data = A[i];
 		temp->next = NULL;
@@ -45,14 +45,14 @@ void displayNodeListDataRec(NodeList* l) {
 	}
 }
 
-int nodeCounter(NodeList* l) {
+int listLength(NodeList* l) {
 
 	int quantity = 0;
 	if (l == NULL) {
 		return quantity;
 	}
 	else {
-		while (l->next != NULL) {
+		while (l != NULL) {
 			quantity++;
 			l = l->next;
 		}
@@ -60,13 +60,13 @@ int nodeCounter(NodeList* l) {
 	}
 }
 
-int nodeCounterRec(NodeList* l) {
+int listLengthRec(NodeList* l) {
 
-	if (l->next == NULL) {
+	if (l == NULL) {
 		return 0;
 	}
 	else {
-		return 1 + nodeCounterRec(l->next);
+		return 1 + listLengthRec(l->next);
 	}
 }
 
@@ -77,7 +77,7 @@ int nodeDataSum(NodeList* l) {
 		return sum;
 	}
 	else {
-		while (l->next != NULL) {
+		while (l != NULL) {
 			sum = sum + l->data;
 			l = l->next;
 		}
@@ -87,7 +87,7 @@ int nodeDataSum(NodeList* l) {
 
 int nodeDataSumRec(NodeList* l) {
 
-	if (l->next == NULL) {
+	if (l == NULL) {
 		return 0;
 	}
 	else {
@@ -103,7 +103,7 @@ int maxNode(NodeList* l) {
 	else {
 		//we asume first node data is the max node
 		int max = l->data;
-		while (l->next != NULL) {
+		while (l != NULL) {
 			if (l->data > max) {
 				max = l->data;
 			}
@@ -135,18 +135,19 @@ NodeList* searchNode(NodeList* l, int number) {
 		return NULL;
 	}
 	else {
-		while (l->next != NULL) {
+		while (l != NULL) {
 			if (l->data == number) {
 				return l;
 			}
 			l = l->next;
 		}
+		return NULL;
 	}
 }
 
 NodeList* searchNodeRec(NodeList* l, int number) {
 
-	if (l->next == NULL) {
+	if (l == NULL) {
 		return NULL;
 	}
 	if (l->data == number) {
@@ -165,14 +166,14 @@ void insertNodeAtFront(NodeList*& l, int number) {
 
 void insertNodeAtPosition(NodeList*& list, int number, int pos) {
 
-	if (list == NULL || pos == 0) {
+	if (list == NULL || pos == 1) {
 		insertNodeAtFront(list, number);
 	}
 	else {
-		if (pos > 0) {
+		if (pos > 1) {
 			NodeList* l = list;
 
-			for (int i = 1; i < pos && l->next != NULL; i++) {
+			for (int i = 2; i < pos && l->next != NULL; i++) {
 				l = l->next;
 			}
 
@@ -216,8 +217,8 @@ void deleteNode(NodeList*& list, int number) {
 }
 
 void deleteNodeByPositionRec(NodeList*& list, int pos) {
-	if (list != NULL) {
-		if (pos == 0) {
+	if (list != NULL && pos > 0) {
+		if (pos == 1) {
 			deleteNode(list, list->data);
 		}
 		else {
@@ -277,7 +278,7 @@ NodeList* arrayToList(int* a, unsigned int n) {
 		result->next = NULL;
 		last = result;
 
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i < n; i++) {
 			temp = new NodeList();
 			temp->data = a[i];
 			temp->next = NULL;
@@ -330,6 +331,27 @@ void difference(NodeList*& l1, NodeList* l2) {
 	}
 }
 
+void deleteFrom(NodeList*& l, unsigned int k) {
+	int length = listLength(l);
+
+	if (l == NULL || k < 1 || k >= length) {
+		return;
+	}
+	int pos = 1;
+	while (l != NULL && l->next != NULL) {
+		if (pos > k) {
+			while (k < length) {
+				deleteNode(l, l->data);
+				k++;
+			}
+		}
+		else {
+			pos++;
+			l = l->next;
+		}
+	}
+}
+
 int main() {
 
 	int A[] = { 2,1,6,3,30,52,14,26 };
@@ -353,26 +375,29 @@ int main() {
 	int G[] = { 1,2,5,8,9,13 };
 	NodeList* listSix = createLinkedList(G, 6);
 
+	int H[] = { 5,2,3,9,8 };
+	NodeList* listSeven = createLinkedList(H, 5);
+
 	int* p = A;
 
 	//displayNodeListDataRec(list);
-	//cout << nodeCounter(list);
-	//cout << nodeCounterRec(list);
+	//cout << listLength(list);
+	//cout << listLengthRec(list);
 	//cout << nodeDataSum(list);
 	//cout << nodeDataSumRec(list);
 	//cout << maxNode(list);
 	//cout << maxNodeRec(list);
-	//cout << searchNode(list, 14);
+	//cout << searchNode(list, 140);
 	//cout << searchNodeRec(list, 14);
-	//insertNodeAtPosition(list, 20, 8);
+	//insertNodeAtPosition(list, 20, 7);
 	//insertNodeInSortedList(sortedList, 4);
 	//deleteNodeByPositionRec(list, 6);
-	//displayNodeListData(sortedList);
 	//NodeList* auxList = eraseRange(listTwo, 2, 5);
 	//NodeList* auxList = eraseRangeRec(listTwo, 2, 5);
 	//NodeList* auxList = arrayToList(p, 8);
 	//NodeList* result = commons(listThree, listFour);
-	difference(listFive, listSix);
+	//difference(listFive, listSix);
+	deleteFrom(listSeven, 3);
 	//displayNodeListData(result);
 
 

@@ -179,6 +179,58 @@ NodeAB* rangeCopy(NodeAB* a, int inf, int sup) {
 	}
 }
 
+void eraseTree(NodeAB*& root) {
+	if (root == NULL) {
+		return;
+	}
+	eraseTree(root->left);
+	eraseTree(root->right);
+	delete root;
+	root = NULL;
+}
+
+NodeAB* nodeInAB(NodeAB* root, int x) {
+	if (root == NULL) {
+		return NULL;
+	}
+	if (root->data == x) {
+		return root;
+	}
+	else if (x < root->data) {
+		nodeInAB(root->left, x);
+	}
+	else if (x > root->data) {
+		nodeInAB(root->right, x);
+	}
+}
+
+NodeAB* cloneABTree(NodeAB* root) {
+	if (root == NULL) {
+		return NULL;
+	}
+	else {
+		NodeAB* clone = new NodeAB();
+		clone->data = root->data;
+		clone->left = cloneABTree(root->left);
+		clone->right = cloneABTree(root->right);
+		return clone;
+	}
+}
+
+NodeAB* subTreeCopy(NodeAB* root, int x) {
+	if (root == NULL) {
+		return NULL;
+	}
+	if (nodeInAB(root, x) != NULL) {
+		NodeAB* nodeFound = nodeInAB(root, x);
+		NodeAB* result = new NodeAB();
+		result->data = nodeFound->data;
+		result->left = cloneABTree(nodeFound->left);
+		result->right = cloneABTree(nodeFound->right);
+		return result;
+	}
+}
+
 
 int main() {
 
@@ -193,8 +245,11 @@ int main() {
 	//cout << minLevelK(root, 2);
 	//cout << maxNode(root);
 	//printRange(root, 3, 9);
-	NodeAB* result = rangeCopy(root, 1, 12);
+	//NodeAB* result = rangeCopy(root, 1, 12);
+	//preOrder(result);
+	//eraseTree(root);
+	NodeAB* result = subTreeCopy(root, 4);
 	preOrder(result);
-	
+
 	return 0;
 }
