@@ -388,6 +388,27 @@ NodeAB* minimum(NodeAB* t) {
 	return searchNodeAB(t, min);
 }
 
+int minSuccessor(int a, int b) {
+	if (b == INT_MAX || a < b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+
+int successor(NodeAB* t, int x) {
+	if (t != NULL) {
+		if (t->data <= x) {
+			return successor(t->right, x);
+		}
+		else {
+			return minSuccessor(t->data, successor(t->left, x));
+		}
+	}
+	return INT_MAX;
+}
+
 int main() {
 
 	//int data[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -408,8 +429,9 @@ int main() {
 	//NodeList* result = NULL;
 	//pairLevelInList(root, 4, result);
 	//rangeList(root, 1, 12, result);
-	NodeAB* result = minimum(root);
-	preOrder(result);
+	//NodeAB* result = minimum(root);
+	//preOrder(result);
+	cout << successor(root, 7);
 
 	return 0;
 }

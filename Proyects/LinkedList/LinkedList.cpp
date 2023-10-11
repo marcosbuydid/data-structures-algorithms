@@ -309,7 +309,7 @@ void difference(NodeList*& l1, NodeList* l2) {
 	if (l1 == NULL || l2 == NULL) {
 		return;
 	}
-	while (l1->next != NULL && l2->next != NULL) {
+	while (l1 != NULL && l2 != NULL) {
 		if (l1->data == l2->data) {
 			deleteNode(l1, l1->data);
 			l2 = l2->next;
@@ -453,6 +453,27 @@ NodeList* merge(int* a1, int* a2, int n) {
 	return result;
 }
 
+void lastFirst(NodeList* &l) {
+	int length = listLength(l);
+	if (l == NULL || length < 2) {
+		return;
+	}
+
+	int pos = 1;
+	while (pos < length){
+		pos++;
+		l = l->next;
+	}
+	//save the node data before deleting it
+	int nodeData = l->data;
+
+	//delete the last element of the list
+	deleteNode(l, l->data);
+
+	//insert node at the beginning of the list
+	insertNodeAtFront(l, nodeData);
+}
+
 int main() {
 
 	int A[] = { 2,1,6,3,30,52,14,26 };
@@ -507,8 +528,9 @@ int main() {
 	//NodeList* result = impairPositionCopy(listSeven);
 	//deleteNoInitialPos(listSeven, 5);
 	//NodeList* result = copyByPosition(listSeven, 2, 5);
-	NodeList* result = merge(I, J, 5);
-	displayNodeListData(result);
+	//NodeList* result = merge(I, J, 5);
+	lastFirst(listSeven);
+	//displayNodeListData(result);
 	
 	return 0;
 }
