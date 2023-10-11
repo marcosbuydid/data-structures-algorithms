@@ -1,5 +1,5 @@
 ﻿  Trees.cpp
-C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Trees\Trees.cpp(180): warning C4715: 'rangeCopy': no todas las rutas de acceso de control devuelven un valor
-C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Trees\Trees.cpp(205): warning C4715: 'nodeInAB': no todas las rutas de acceso de control devuelven un valor
-C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Trees\Trees.cpp(232): warning C4715: 'subTreeCopy': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Trees\Trees.cpp(186): warning C4715: 'rangeCopy': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Trees\Trees.cpp(211): warning C4715: 'nodeInAB': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Trees\Trees.cpp(238): warning C4715: 'subTreeCopy': no todas las rutas de acceso de control devuelven un valor
   Trees.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Trees.exe

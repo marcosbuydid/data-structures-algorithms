@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include<stdio.h>
 #include <stdlib.h>
 
@@ -185,16 +185,6 @@ void insertNodeAtPosition(NodeList*& list, int number, int pos) {
 	}
 }
 
-void insertNodeInSortedList(NodeList*& list, int number) {
-
-	if (list == NULL || list->data >= number) {
-		insertNodeAtFront(list, number);
-	}
-	else {
-		insertNodeInSortedList(list->next, number);
-	}
-}
-
 void insertNodeAtLast(NodeList*& list, int number) {
 	if (list == NULL) {
 		list = new NodeList();
@@ -228,23 +218,23 @@ void deleteNodeByPositionRec(NodeList*& list, int pos) {
 	}
 }
 
-NodeList* eraseRange(NodeList*& list, int startPos, int finalPos) {
-	if (list == NULL || startPos > finalPos || startPos < 1) {
+NodeList* eraseRange(NodeList*& l, int startPos, int finalPos) {
+	if (l == NULL || startPos > finalPos || startPos < 1) {
 		return NULL;
 	}
 	else {
 		int posAux = 1;
 		NodeList* result = NULL;
-		while (list != NULL) {
+		while (l != NULL) {
 			if (posAux == startPos) {
 				while (startPos <= finalPos) {
-					deleteNode(list, list->data);
+					deleteNode(l, l->data);
 					startPos++;
 				}
 			}
-			if (list != NULL) {
-				insertNodeAtLast(result, list->data);
-				list = list->next;
+			if (l != NULL) {
+				insertNodeAtLast(result, l->data);
+				l = l->next;
 			}
 			posAux++;
 		}
@@ -354,6 +344,86 @@ void deleteFrom(NodeList*& l, unsigned int k) {
 	}
 }
 
+void addOrdered(NodeList*& list, int number) {
+
+	if (list == NULL || number <= list->data) {
+		insertNodeAtFront(list, number);
+	}
+	else {
+		addOrdered(list->next, number);
+	}
+}
+
+NodeList* sort(NodeList* l) {
+	if (l == NULL) {
+		return NULL;
+	}
+	NodeList* result = NULL;
+	while (l != NULL) {
+		addOrdered(result, l->data);
+		l = l->next;
+	}
+	return result;
+}
+
+NodeList* impairPositionCopy(NodeList* l) {
+	if (l == NULL) {
+		return NULL;
+	}
+	NodeList* result = NULL;
+	int pos = 1;
+	while (l != NULL) {
+		if (pos % 2 == 1) {
+			insertNodeAtLast(result, l->data);
+		}
+		l = l->next;
+		pos++;
+	}
+	return result;
+}
+
+void deleteNoInitialPos(NodeList* &l, int k) {
+	int length = listLength(l);
+	if (l == NULL || k > length) {
+		return;
+	}
+	int pos = 1;
+	while (l != NULL) {
+		if (pos == k) {
+			deleteNode(l, l->data);
+		}
+		if (l != NULL) {
+			l = l->next;
+		}
+		pos++;
+	}
+}
+
+NodeList* copyByPosition(NodeList* L, int p1, int p2) {
+	// precondition 1≤ p1≤ p2≤ length(L)
+	if (L == NULL) {
+		return NULL;
+	}
+	int pos = 1;
+	NodeList* result = NULL;
+	while (L != NULL) {
+		if (pos == p1) {
+			while (p1 <= p2) {
+				insertNodeAtFront(result, L->data);
+				p1++;
+				L = L->next;
+			}
+		}
+		else {
+			pos++;
+			if (L != NULL) {
+				L = L->next;
+			}
+		}
+	}
+	return result;
+}
+
 int main() {
 
 	int A[] = { 2,1,6,3,30,52,14,26 };
@@ -399,9 +469,12 @@ int main() {
 	//NodeList* auxList = arrayToList(p, 8);
 	//NodeList* result = commons(listThree, listFour);
 	//difference(listFive, listSix);
-	deleteFrom(listSeven, 3);
-	//displayNodeListData(auxList);
-
-
+	//deleteFrom(listSeven, 3);
+	//NodeList* result = sort(list);
+	//NodeList* result = impairPositionCopy(listSeven);
+	//deleteNoInitialPos(listSeven, 5);
+	NodeList* result = copyByPosition(listSeven, 2, 5);
+	displayNodeListData(result);
+	
 	return 0;
 }

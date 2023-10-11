@@ -13,6 +13,12 @@ struct NodeAB {
 	NodeAB* right;
 };
 
+struct NodeAG {
+	int data;
+	NodeAG* firstChild;
+	NodeAG* nextSibling;
+};
+
 NodeAB* createNode(int data) {
 	NodeAB* node = (NodeAB*)malloc(sizeof(NodeAB));
 	node->data = data;
@@ -232,6 +238,110 @@ NodeAB* subTreeCopy(NodeAB* root, int x) {
 }
 
 
+NodeAG* searchNodeAG(NodeAG* root, int x) {
+	if (root == NULL) {
+		return NULL;
+	}
+
+	if (root->data == x) {
+		return root;
+	}
+
+	NodeAG* firstChildNode = searchNodeAG(root->firstChild, x);
+	if (firstChildNode != NULL) {
+		return firstChildNode;
+	}
+	else {
+		return searchNodeAG(root->nextSibling, x);
+	}
+}
+
+//Precondition: The AG not have repeeated nodes
+//Poscondition: Insert a child as first child of a father node 
+// if father exist in the tree and the child is not.
+
+void insertNodeInAG(NodeAG*& a, int father, int child) {
+	NodeAG* fatherNode = searchNodeAG(a, father);
+
+	if (fatherNode != NULL && searchNodeAG(a, child) == NULL) {
+		NodeAG* childNode = new NodeAG();
+		childNode->data = child;
+		childNode->firstChild = NULL;
+		childNode->nextSibling = fatherNode->nextSibling;
+		fatherNode->firstChild = childNode;
+	}
+}
+
+void childAG(NodeAG* tree, int x, NodeList*& list) {
+	if (tree == NULL) {
+		return;
+	}
+
+	NodeAG* nodeAG = searchNodeAG(tree, x);
+
+	if (nodeAG != NULL) {
+		if (nodeAG->firstChild != NULL) {
+			NodeList* node = new NodeList();
+			node->data = nodeAG->firstChild->data;
+			node->next = list;
+			list = node;
+		}
+		if (nodeAG->nextSibling != NULL) {
+			NodeAG* aux = nodeAG->nextSibling;
+			while (aux->nextSibling != NULL) {
+				NodeList* node = new NodeList();
+				node->data = aux->data;
+				node->next = list;
+				list = node;
+				aux = aux->nextSibling;
+			}
+		}
+	}
+}
+
+NodeList* childs(NodeAG* A, int e) {
+	NodeList* result = NULL;
+	childAG(A, e, result);
+	return result;
+}
+
+void pairLevelInList(NodeAB* t, int k, NodeList*& l) {
+	if (t == NULL) {
+		return;
+	}
+	if (k == 1 && t->data % 2 == 0) {
+		NodeList* node = new NodeList();
+		node->data = t->data;
+		node->next = l;
+		l = node;
+	}
+	else {
+		pairLevelInList(t->left, k - 1, l);
+		pairLevelInList(t->right, k - 1, l);
+	}
+}
+
+void rangeList(NodeAB* t, int inf, int sup, NodeList*& l) {
+	if (t == NULL) {
+		return;
+	}
+
+	if (inf > t->data || sup > t->data) {
+		rangeList(t->right, inf, sup, l);
+	}
+	
+	if (t->data > inf && t->data < sup) {
+		NodeList* node = new NodeList();
+		node->data = t->data;
+		node->next = l;
+		l = node;
+	}
+
+	if (inf < t->data || sup < t->data) {
+		rangeList(t->left, inf, sup, l);
+	}
+}
+
 int main() {
 
 	//int data[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -248,8 +358,11 @@ int main() {
 	//NodeAB* result = rangeCopy(root, 1, 12);
 	//preOrder(result);
 	//eraseTree(root);
-	NodeAB* result = subTreeCopy(root, 4);
-	preOrder(result);
+	//NodeAB* result = subTreeCopy(root, 4);
+	NodeList* result = NULL;
+	//pairLevelInList(root, 4, result);
+	rangeList(root, 1, 12, result);
+	//preOrder(result);
 
 	return 0;
 }
