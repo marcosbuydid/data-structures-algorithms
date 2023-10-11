@@ -424,6 +424,35 @@ NodeList* copyByPosition(NodeList* L, int p1, int p2) {
 	return result;
 }
 
+void insert(NodeList*& list, int number) {
+
+	if (list == NULL || number >= list->data) {
+		insertNodeAtFront(list, number);
+	}
+	else {
+		insert(list->next, number);
+	}
+}
+
+NodeList* merge(int* a1, int* a2, int n) {
+	//precondition n > 0 so arrays have at least 1 element
+	NodeList* result = NULL;
+	int pos = 0;
+
+	while (pos < n) {
+		if (a1[pos] <= a2[pos]) {
+			insert(result, a1[pos]);
+			insert(result, a2[pos]);
+		}
+		else {
+			insert(result, a2[pos]);
+			insert(result, a1[pos]);
+		}
+		pos++;
+	}
+	return result;
+}
+
 int main() {
 
 	int A[] = { 2,1,6,3,30,52,14,26 };
@@ -452,6 +481,10 @@ int main() {
 
 	int* p = A;
 
+	int I[] = { 2,4,4,6,7 };
+
+	int J[] = { 1,2,4,8,9 };
+
 	//displayNodeListDataRec(list);
 	//cout << listLength(list);
 	//cout << listLengthRec(list);
@@ -473,7 +506,8 @@ int main() {
 	//NodeList* result = sort(list);
 	//NodeList* result = impairPositionCopy(listSeven);
 	//deleteNoInitialPos(listSeven, 5);
-	NodeList* result = copyByPosition(listSeven, 2, 5);
+	//NodeList* result = copyByPosition(listSeven, 2, 5);
+	NodeList* result = merge(I, J, 5);
 	displayNodeListData(result);
 	
 	return 0;

@@ -155,11 +155,16 @@ void printRange(NodeAB* t, int min, int max) {
 	if (t == NULL) {
 		return;
 	}
-	else {
+
+	if (min > t->data || max > t->data) {
 		printRange(t->right, min, max);
-		if (t->data >= min && t->data <= max) {
-			cout << t->data << ", " << flush;
-		}
+	}
+
+	if (t->data >= min && t->data <= max) {
+		cout << t->data << ", " << flush;
+	}
+
+	if (min < t->data || max < t->data) {
 		printRange(t->left, min, max);
 	}
 }
@@ -342,6 +347,47 @@ void rangeList(NodeAB* t, int inf, int sup, NodeList*& l) {
 	}
 }
 
+NodeAB* searchNodeAB(NodeAB* t, int e) {
+	if (t == NULL) {
+		return NULL;
+	}
+	if (t->data == e) {
+		return t;
+	}
+	NodeAB* node = searchNodeAB(t->left, e);
+	if (node != NULL) {
+		return node;
+	}
+	else {
+		return searchNodeAB(t->right, e);
+	}
+}
+
+int minNode(NodeAB* t) {
+	if (t == NULL) {
+		return 0;
+	}
+	int min = t->data;
+	if (t->left != NULL) {
+		int leftMin = minNode(t->left);
+		if (min > leftMin) {
+			min = leftMin;
+		}
+	}
+	if (t->right != NULL) {
+		int rightMin = minNode(t->right);
+		if (min > rightMin) {
+			min = rightMin;
+		}
+	}
+	return min;
+}
+
+NodeAB* minimum(NodeAB* t) {
+	int min = minNode(t);
+	return searchNodeAB(t, min);
+}
+
 int main() {
 
 	//int data[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -359,10 +405,11 @@ int main() {
 	//preOrder(result);
 	//eraseTree(root);
 	//NodeAB* result = subTreeCopy(root, 4);
-	NodeList* result = NULL;
+	//NodeList* result = NULL;
 	//pairLevelInList(root, 4, result);
-	rangeList(root, 1, 12, result);
-	//preOrder(result);
+	//rangeList(root, 1, 12, result);
+	NodeAB* result = minimum(root);
+	preOrder(result);
 
 	return 0;
 }
