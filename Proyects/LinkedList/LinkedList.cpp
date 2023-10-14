@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include<stdio.h>
 #include <stdlib.h>
 
@@ -185,16 +185,6 @@ void insertNodeAtPosition(NodeList*& list, int number, int pos) {
 	}
 }
 
-void insertNodeInSortedList(NodeList*& list, int number) {
-
-	if (list == NULL || list->data >= number) {
-		insertNodeAtFront(list, number);
-	}
-	else {
-		insertNodeInSortedList(list->next, number);
-	}
-}
-
 void insertNodeAtLast(NodeList*& list, int number) {
 	if (list == NULL) {
 		list = new NodeList();
@@ -228,23 +218,23 @@ void deleteNodeByPositionRec(NodeList*& list, int pos) {
 	}
 }
 
-NodeList* eraseRange(NodeList*& list, int startPos, int finalPos) {
-	if (list == NULL || startPos > finalPos || startPos < 1) {
+NodeList* eraseRange(NodeList*& l, int startPos, int finalPos) {
+	if (l == NULL || startPos > finalPos || startPos < 1) {
 		return NULL;
 	}
 	else {
 		int posAux = 1;
 		NodeList* result = NULL;
-		while (list != NULL) {
+		while (l != NULL) {
 			if (posAux == startPos) {
 				while (startPos <= finalPos) {
-					deleteNode(list, list->data);
+					deleteNode(l, l->data);
 					startPos++;
 				}
 			}
-			if (list != NULL) {
-				insertNodeAtLast(result, list->data);
-				list = list->next;
+			if (l != NULL) {
+				insertNodeAtLast(result, l->data);
+				l = l->next;
 			}
 			posAux++;
 		}
@@ -319,7 +309,7 @@ void difference(NodeList*& l1, NodeList* l2) {
 	if (l1 == NULL || l2 == NULL) {
 		return;
 	}
-	while (l1->next != NULL && l2->next != NULL) {
+	while (l1 != NULL && l2 != NULL) {
 		if (l1->data == l2->data) {
 			deleteNode(l1, l1->data);
 			l2 = l2->next;
@@ -354,6 +344,136 @@ void deleteFrom(NodeList*& l, unsigned int k) {
 	}
 }
 
+void addOrdered(NodeList*& list, int number) {
+
+	if (list == NULL || number <= list->data) {
+		insertNodeAtFront(list, number);
+	}
+	else {
+		addOrdered(list->next, number);
+	}
+}
+
+NodeList* sort(NodeList* l) {
+	if (l == NULL) {
+		return NULL;
+	}
+	NodeList* result = NULL;
+	while (l != NULL) {
+		addOrdered(result, l->data);
+		l = l->next;
+	}
+	return result;
+}
+
+NodeList* impairPositionCopy(NodeList* l) {
+	if (l == NULL) {
+		return NULL;
+	}
+	NodeList* result = NULL;
+	int pos = 1;
+	while (l != NULL) {
+		if (pos % 2 == 1) {
+			insertNodeAtLast(result, l->data);
+		}
+		l = l->next;
+		pos++;
+	}
+	return result;
+}
+
+void deleteNoInitialPos(NodeList* &l, int k) {
+	int length = listLength(l);
+	if (l == NULL || k > length) {
+		return;
+	}
+	int pos = 1;
+	while (l != NULL) {
+		if (pos == k) {
+			deleteNode(l, l->data);
+		}
+		if (l != NULL) {
+			l = l->next;
+		}
+		pos++;
+	}
+}
+
+NodeList* copyByPosition(NodeList* L, int p1, int p2) {
+	// precondition 1≤ p1≤ p2≤ length(L)
+	if (L == NULL) {
+		return NULL;
+	}
+	int pos = 1;
+	NodeList* result = NULL;
+	while (L != NULL) {
+		if (pos == p1) {
+			while (p1 <= p2) {
+				insertNodeAtFront(result, L->data);
+				p1++;
+				L = L->next;
+			}
+		}
+		else {
+			pos++;
+			if (L != NULL) {
+				L = L->next;
+			}
+		}
+	}
+	return result;
+}
+
+void insert(NodeList*& list, int number) {
+
+	if (list == NULL || number >= list->data) {
+		insertNodeAtFront(list, number);
+	}
+	else {
+		insert(list->next, number);
+	}
+}
+
+NodeList* merge(int* a1, int* a2, int n) {
+	//precondition n > 0 so arrays have at least 1 element
+	NodeList* result = NULL;
+	int pos = 0;
+
+	while (pos < n) {
+		if (a1[pos] <= a2[pos]) {
+			insert(result, a1[pos]);
+			insert(result, a2[pos]);
+		}
+		else {
+			insert(result, a2[pos]);
+			insert(result, a1[pos]);
+		}
+		pos++;
+	}
+	return result;
+}
+
+void lastFirst(NodeList* &l) {
+	int length = listLength(l);
+	if (l == NULL || length < 2) {
+		return;
+	}
+
+	int pos = 1;
+	while (pos < length){
+		pos++;
+		l = l->next;
+	}
+	//save the node data before deleting it
+	int nodeData = l->data;
+
+	//delete the last element of the list
+	deleteNode(l, l->data);
+
+	//insert node at the beginning of the list
+	insertNodeAtFront(l, nodeData);
+}
+
 int main() {
 
 	int A[] = { 2,1,6,3,30,52,14,26 };
@@ -382,6 +502,10 @@ int main() {
 
 	int* p = A;
 
+	int I[] = { 2,4,4,6,7 };
+
+	int J[] = { 1,2,4,8,9 };
+
 	//displayNodeListDataRec(list);
 	//cout << listLength(list);
 	//cout << listLengthRec(list);
@@ -399,9 +523,14 @@ int main() {
 	//NodeList* auxList = arrayToList(p, 8);
 	//NodeList* result = commons(listThree, listFour);
 	//difference(listFive, listSix);
-	deleteFrom(listSeven, 3);
-	//displayNodeListData(auxList);
-
-
+	//deleteFrom(listSeven, 3);
+	//NodeList* result = sort(list);
+	//NodeList* result = impairPositionCopy(listSeven);
+	//deleteNoInitialPos(listSeven, 5);
+	//NodeList* result = copyByPosition(listSeven, 2, 5);
+	//NodeList* result = merge(I, J, 5);
+	lastFirst(listSeven);
+	//displayNodeListData(result);
+	
 	return 0;
 }
