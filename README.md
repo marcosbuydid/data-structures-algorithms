@@ -20,5 +20,8 @@ Contains multiple algorithms of how to operate with linked lists.
 ### Recursion
 Contains basic examples about recursion.
 
+### Stack
+Contains one or multiple abstract representations of a Stack.
+
 ### Trees
 Contains multiple algorithms of how to operate with most common trees.

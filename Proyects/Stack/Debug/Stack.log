@@ -1,0 +1,3 @@
+﻿  Stack.cpp
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Stack\Stack.cpp(44): warning C4715: 'IntStack::top': no todas las rutas de acceso de control devuelven un valor
+  Stack.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Stack.exe
