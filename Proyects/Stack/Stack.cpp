@@ -2,67 +2,102 @@
 
 using namespace std;
 
-//ADT Stack using LinkedList
+/*
+* IntStack using LinkedList and a variable elementQuantity.
+* Push, Top, Pop and numberOfEelements operations are made
+* in constant order in the worst case.
+* Implementation is unbounded.
+*/
 
-class NodeList {
-public:
+struct NodeList {
 	int data;
 	NodeList* next;
 };
 
-class IntStack {
-private:
+struct IntStack {
 	NodeList* list;
 	int elementQuantity;
-public:
-	IntStack() {
-		list = NULL;
-		elementQuantity = 0;
-	}
-	void push(int x);
-	int top();
-	void pop();
-	bool isEmpty();
-	int numberOfElements();
-	void display();
-	IntStack clone();
-	void destroy();
 };
 
-void IntStack::push(int x) {
+IntStack* createIntStack() {
+	IntStack* s = new IntStack();
+	s->list = NULL;
+	s->elementQuantity = 0;
+	return s;
+}
+
+bool isEmpty(IntStack* s) {
+	return s->elementQuantity == 0;
+}
+
+void push(IntStack*& s, int x) {
+	if (isEmpty(s)) {
+		s = createIntStack();
+	}
 	NodeList* node = new NodeList();
 	node->data = x;
-	node->next = list;
-	list = node;
-	elementQuantity++;
+	node->next = s->list;
+	s->list = node;
+	s->elementQuantity++;
 };
 
-int IntStack::top() {
-	if (!isEmpty()) {
-		return list->data;
+int top(IntStack* s) {
+	if (!isEmpty(s)) {
+		return s->list->data;
 	}
 }
 
-void IntStack::pop() {
-	if (!isEmpty()) {
-		NodeList* nodeToDelete = list;
-		list = list->next;
+void pop(IntStack*& s) {
+	if (!isEmpty(s)) {
+		NodeList* nodeToDelete = s->list;
+		s->list = s->list->next;
 		delete nodeToDelete;
-		elementQuantity--;
+		s->elementQuantity--;
 	}
 }
 
-bool IntStack::isEmpty() {
-	return list == NULL;
+int numberOfElements(IntStack* s) {
+	return s->elementQuantity;
 }
 
-int IntStack::numberOfElements() {
-	return elementQuantity;
+void destroy(IntStack*& s) {
+	if (isEmpty(s)) {
+		delete s;
+	}
+	else {
+		while (s->list != NULL) {
+			NodeList* nodeToDelete = s->list;
+			s->list = s->list->next;
+			delete nodeToDelete;
+		}
+		delete s;
+	}
 }
 
-void IntStack::display() {
-	NodeList* iterator = list;
+IntStack* clone(IntStack* s) {
+	IntStack* clone = createIntStack();
+	if (s->list == NULL) {
+		return clone;
+	}
+	else {
+		IntStack* aux = createIntStack();
+		NodeList* iterator = s->list;
+		while (iterator != NULL) {
+			push(aux, iterator->data);
+			iterator = iterator->next;
+		}
+		iterator = aux->list;
+		while (iterator != NULL) {
+			push(clone, iterator->data);
+			iterator = iterator->next;
+		}
+		destroy(aux);
+		return clone;
+	}
+}
 
+void display(IntStack* s) {
+	NodeList* iterator = s->list;
 	while (iterator != NULL) {
 		cout << iterator->data << " ";
 		iterator = iterator->next;
@@ -70,60 +105,25 @@ void IntStack::display() {
 	cout << endl;
 }
 
-IntStack IntStack::clone() {
-	IntStack clone;
-	IntStack aux;
-	if (list == NULL) {
-		return clone;
-	}
-	else {
-		NodeList* iterator = list;
-		while (iterator != NULL) {
-			aux.push(iterator->data);
-			iterator = iterator->next;
-		}
-		iterator = aux.list;
-		while (iterator != NULL) {
-			clone.push(iterator->data);
-			iterator = iterator->next;
-		}
-		aux.destroy();
-		return clone;
-	}
-}
-
-void IntStack::destroy() {
-	if (list == NULL) {
-		delete list;
-	}
-	else {
-		while (list != NULL) {
-			NodeList* nodeToDelete = list;
-			list = list->next;
-			delete nodeToDelete;
-		}
-		delete list;
-	}
-}
-
 
 int main()
 {
-	IntStack intStack;
+	IntStack* s = createIntStack();
 
-	intStack.push(10);
-	intStack.push(20);
-	intStack.push(30);
-	intStack.push(40);
-	intStack.push(50);
+	push(s, 10);
+	push(s, 20);
+	push(s, 30);
+	push(s, 40);
+	push(s, 50);
 
-	//intStack.pop();
+	//pop(s);
 
-	//cout << intStack.numberOfElements();
+	//cout << numberOfElements(s);
 
-	IntStack clone = intStack.clone();
+	//display(s);
 
-	//intStack.display();
-	clone.display();
+	IntStack* clonedStack = clone(s);
+
+	display(clonedStack);
 }
 

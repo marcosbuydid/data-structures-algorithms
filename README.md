@@ -17,6 +17,9 @@ Contains various examples about arrays, structures, pointers, functions and more
 ### Linked List
 Contains multiple algorithms of how to operate with linked lists.
 
+### List
+Contains one or multiple abstract representations of a List.
+
 ### Recursion
 Contains basic examples about recursion.
 
