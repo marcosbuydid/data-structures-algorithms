@@ -106,6 +106,34 @@ PositionList* clone(PositionList* pl) {
 	}
 }
 
+void erase(PositionList*& pl, int pos) {
+	if (pos < 0 || pos >= pl->index + 1) {
+		return;
+	}
+	int* temp = new int[pl->maxSize];
+	if (pos == 0) {
+		for (int i = 1; i < pl->index + 1; i++) {
+			temp[i-1] = pl->arrayList[i];
+		}
+	}
+	else {
+		int auxIndex = 0;
+		for (int i = 0; i < pos; i++) {
+			temp[i] = pl->arrayList[i];
+			auxIndex = i;
+		}
+		for (int i = pos+1; i <= pl->index; i++) {
+			temp[auxIndex + 1] = pl->arrayList[i];
+			auxIndex++;
+		}
+	}
+	int* aux = pl->arrayList;
+	pl->arrayList = temp;
+	delete aux;
+
+	pl->index--;
+}
+
 
 
 void display(PositionList* pl) {
@@ -138,10 +166,11 @@ int main()
 
 	//destroy(pList);
 
-	PositionList* p = clone(pList);
+	//PositionList* p = clone(pList);
 
-	//display(pList);
-	display(p);
+	erase(pList, 4);
+
+	display(pList);
 
 	return 0;
 }
