@@ -14,6 +14,9 @@ You will find different proyects with a specific topic to practice or learn.
 ### Essentials
 Contains various examples about arrays, structures, pointers, functions and more.
 
+### Queue
+Contains one or multiple abstract representations of a Queue.
+
 ### Linked List
 Contains multiple algorithms of how to operate with linked lists.
 
