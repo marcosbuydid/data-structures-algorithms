@@ -28,7 +28,7 @@ bool isEmpty(PositionList* pl) {
 	return pl->index == -1;
 }
 
-void destroy(PositionList* pl) {
+void destroy(PositionList* &pl) {
 	delete[] pl->arrayList;
 	pl->index = -1;
 	pl->maxSize = 0;
@@ -51,7 +51,10 @@ void add(PositionList*& pl, int e, int pos) {
 			for (int i = 0; i < pl->index + 1; i++) {
 				extendedList[i] = pl->arrayList[i];
 			}
+			int* aux = pl->arrayList;
 			pl->arrayList = extendedList;
+			pl->maxSize = extendedSize;
+			delete aux;
 		}
 		//we shift the position of the elements in the arraylist
 		//so we can save the new element in the position selected.
@@ -168,7 +171,9 @@ int main()
 
 	//PositionList* p = clone(pList);
 
+	//erase(pList, 0);
 	erase(pList, 4);
+	//erase(pList, 12);
 
 	display(pList);
 
