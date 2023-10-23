@@ -103,6 +103,36 @@ void destroy(IntQueue*& q) {
 	}
 }
 
+void display(IntQueue* q) {
+	if (!isEmpty(q)) {
+		NodeList* iterator = q->front;
+		while (iterator != NULL) {
+			cout << iterator->data << " ";
+			iterator = iterator->next;
+		}
+		cout << endl;
+	}
+}
+
 int main() {
+
+	IntQueue* iq = createIntQueue();
+
+	for (int i = 0; i < 6; i++) {
+		enqueue(iq, i);
+	}
+
+	dequeue(iq);
+
+	//cout << first(iq);
+
+	//cout << numberOfElements(iq);
+	
+	//IntQueue* cloneQueue = clone(iq);
+
+	//destroy(iq);
+
+	display(iq);
+
 	return 0;
 }
