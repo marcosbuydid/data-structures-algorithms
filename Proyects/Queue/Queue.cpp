@@ -58,6 +58,9 @@ void dequeue(IntQueue*& q) {
 	if (!isEmpty(q)) {
 		NodeList* node = q->front;
 		q->front = q->front->next;
+		if (q->front == NULL) {
+			q->back = NULL;
+		}
 		delete node;
 		q->elementQuantity--;
 	}
@@ -73,18 +76,12 @@ IntQueue* clone(IntQueue* q) {
 		return clone;
 	}
 	else {
-		IntQueue* aux = createIntQueue();
-		while (q->front != NULL) {
-			int element = q->front->data;
-			enqueue(aux, element);
-			q->front = q->front->next;
-		}
-		while (!isEmpty(aux)) {
-			int element = first(aux);
+		NodeList* iterator = q->front;
+		while (iterator != NULL) {
+			int element = iterator->data;
 			enqueue(clone, element);
-			dequeue(aux);
+			iterator = iterator->next;
 		}
-		delete aux;
 		return clone;
 	}
 }

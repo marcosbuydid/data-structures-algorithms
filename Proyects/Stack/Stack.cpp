@@ -76,7 +76,7 @@ void destroy(IntStack*& s) {
 
 IntStack* clone(IntStack* s) {
 	IntStack* clone = createIntStack();
-	if (s->list == NULL) {
+	if (isEmpty(s)) {
 		return clone;
 	}
 	else {
