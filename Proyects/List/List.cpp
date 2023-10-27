@@ -295,6 +295,26 @@ NodeAB* nodeInAB(NodeAB* root, int x) {
 	}
 }
 
+NodeAB* cloneAB(NodeAB* tree) {
+	if (tree == NULL) {
+		return NULL;
+	}
+	NodeAB* clonedTree = new NodeAB();
+	clonedTree->data = tree->data;
+	clonedTree->left = cloneAB(tree->left);
+	clonedTree->right = cloneAB(tree->right);
+	return clonedTree;
+}
+
+void eraseAB(NodeAB* tree) {
+	if (tree != NULL) {
+		eraseAB(tree->left);
+		eraseAB(tree->right);
+		delete tree;
+		tree = NULL;
+	}
+}
+
 /*
 * End of auxiliary methods of SortedIntList
 */
@@ -361,6 +381,23 @@ unsigned int numberOfElements(SortedIntList* l) {
 	return l->elementQuantity;
 }
 
+SortedIntList* clone(SortedIntList* l) {
+	SortedIntList* clonedList = createSortedIntList();
+	if (isEmpty(l)) {
+		return clonedList;
+	}
+	else {
+		clonedList->list = cloneAB(l->list);
+		clonedList->elementQuantity = l->elementQuantity;
+		return clonedList;
+	}
+}
+
+void destroy(SortedIntList* l) {
+	eraseAB(l->list);
+	l->elementQuantity = 0;
+}
+
 void display(SortedIntList* l) {
 	inOrder(l->list);
 }
@@ -415,6 +452,10 @@ int main()
 	//exists(sl, 13);
 
 	//cout << numberOfElements(sl);
+
+	//SortedIntList* clonedList = clone(sl);
+
+	//destroy(sl);
 
 	display(sl);
 
