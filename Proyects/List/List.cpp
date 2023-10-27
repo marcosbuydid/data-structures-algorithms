@@ -164,7 +164,7 @@ struct NodeAB {
 
 struct SortedIntList {
 	NodeAB* list;
-	int elementQuantity;
+	unsigned int elementQuantity;
 };
 
 /*
@@ -224,7 +224,7 @@ void inOrder(NodeAB* root) {
 
 int maxNode(NodeAB* root) {
 	if (root == NULL) {
-		return 0;
+		return INT_MIN;
 	}
 	else {
 		int maximum = maxNode(root->right);
@@ -234,6 +234,64 @@ int maxNode(NodeAB* root) {
 		else {
 			return root->data;
 		}
+	}
+}
+
+int minNode(NodeAB* root) {
+	if (root == NULL) {
+		return INT_MAX;
+	}
+	else {
+		int minimum = minNode(root->left);
+		if (minimum < root->data) {
+			return minimum;
+		}
+		else {
+			return root->data;
+		}
+	}
+}
+
+void deleteNodeAB(NodeAB* &tree, int e) {
+	if (tree != NULL) {
+		if (e < tree->data) {
+			deleteNodeAB(tree->left, e);
+		}
+		else if (e > tree->data) {
+			deleteNodeAB(tree->right, e);
+		}
+		else {
+			if (tree->left == NULL) {
+				NodeAB* nodeToDelete = tree;
+				tree = tree->right;
+				delete nodeToDelete;
+			}
+			else if (tree->right == NULL) {
+				NodeAB* nodeToDelete = tree;
+				tree = tree->left;
+				delete nodeToDelete;
+			}
+			else {
+				int maximum = maxNode(tree->left);
+				tree->data = maximum;
+				deleteNodeAB(tree->left, maximum);
+			}
+		}
+	}
+}
+
+NodeAB* nodeInAB(NodeAB* root, int x) {
+	if (root == NULL) {
+		return NULL;
+	}
+	if (root->data == x) {
+		return root;
+	}
+	else if (x < root->data) {
+		nodeInAB(root->left, x);
+	}
+	else if (x > root->data) {
+		nodeInAB(root->right, x);
 	}
 }
 
@@ -258,6 +316,49 @@ void add(SortedIntList* &l, int e) {
 	}
 	insertNodeInABB(l->list, e);
 	l->elementQuantity++;
+}
+
+void erase(SortedIntList* &l, int e) {
+	if (nodeInAB(l->list, e)) {
+		deleteNodeAB(l->list, e);
+		l->elementQuantity--;
+	}
+}
+
+void eraseMax(SortedIntList*& l) {
+	int maximum = maxNode(l->list);
+	if (maximum != INT_MIN) {
+		deleteNodeAB(l->list, maximum);
+		l->elementQuantity--;
+	}
+}
+
+void eraseMin(SortedIntList*& l) {
+	int minimum = minNode(l->list);
+	if (minimum != INT_MAX) {
+		deleteNodeAB(l->list, minimum);
+		l->elementQuantity--;
+	}
+}
+
+int minimum(SortedIntList* l) {
+	if (!isEmpty(l)) {
+		return minNode(l->list);
+	}
+}
+
+int maximum(SortedIntList* l) {
+	if (!isEmpty(l)) {
+		return maxNode(l->list);
+	}
+}
+
+bool exists(SortedIntList* l, int e) {
+	return nodeInAB(l->list, e);
+}
+
+unsigned int numberOfElements(SortedIntList* l) {
+	return l->elementQuantity;
 }
 
 void display(SortedIntList* l) {
@@ -295,12 +396,25 @@ int main()
 
 	SortedIntList* sl = new SortedIntList();
 
+	add(sl, -1234);
 	add(sl, 8);
 	add(sl, 4);
 	add(sl, 5);
 	add(sl, 10);
 	add(sl, 12);
 	add(sl, 13);
+	add(sl, 455677);
+
+	//erase(sl, 13);
+	//eraseMax(sl);
+	//eraseMin(sl);
+
+	//cout << minimum(sl);
+	//cout << maximum(sl);
+
+	//exists(sl, 13);
+
+	//cout << numberOfElements(sl);
 
 	display(sl);
 
