@@ -148,22 +148,138 @@ void display(PositionList* pl) {
 	}
 }
 
+/*
+* SortedIntList using a binary search tree pointer 
+* and a variable elementQuantity.
+* Add, erase, exists operations are made in O(log2n) 
+* in average and numberOfElements in O(1).
+* Implementation is unbounded.
+*/
+
+struct NodeAB {
+	int data;
+	NodeAB* left;
+	NodeAB* right;
+};
+
+struct SortedIntList {
+	NodeAB* list;
+	int elementQuantity;
+};
+
+/*
+* Auxiliary methods of SortedIntList
+*/
+
+void insertNodeInABB(NodeAB* &root, int data) {
+
+	NodeAB* t = root;
+	NodeAB* p;
+	NodeAB* r = NULL;
+
+	// root is empty
+	if (root == NULL) {
+		p = new NodeAB();
+		p->data = data;
+		p->left = NULL;
+		p->right = NULL;
+		root = p;
+		return;
+	}
+
+	while (t != NULL) {
+		r = t;
+		if (data < t->data) {
+			t = t->left;
+		}
+		else if (data > t->data) {
+			t = t->right;
+		}
+		else {
+			return;
+		}
+	}
+
+	// Now t points at NULL and r points at insert location
+	p = new NodeAB();
+	p->data = data;
+	p->left = NULL;
+	p->right = NULL;
+
+	if (data < r->data) {
+		r->left = p;
+	}
+	else {
+		r->right = p;
+	}
+}
+
+void inOrder(NodeAB* root) {
+	if (root != NULL) {
+		inOrder(root->left);
+		cout << root->data << ", " << flush;
+		inOrder(root->right);
+	}
+}
+
+int maxNode(NodeAB* root) {
+	if (root == NULL) {
+		return 0;
+	}
+	else {
+		int maximum = maxNode(root->right);
+		if (maximum > root->data) {
+			return maximum;
+		}
+		else {
+			return root->data;
+		}
+	}
+}
+
+/*
+* End of auxiliary methods of SortedIntList
+*/
+
+SortedIntList* createSortedIntList() {
+	SortedIntList* sl = new SortedIntList();
+	sl->list = NULL;
+	sl->elementQuantity = 0;
+	return sl;
+}
+
+bool isEmpty(SortedIntList* l) {
+	return l->elementQuantity == 0;
+}
+
+void add(SortedIntList* &l, int e) {
+	if (isEmpty(l)) {
+		l = createSortedIntList();
+	}
+	insertNodeInABB(l->list, e);
+	l->elementQuantity++;
+}
+
+void display(SortedIntList* l) {
+	inOrder(l->list);
+}
+
 int main()
 {
-	PositionList* pList = createPositionList();
+	//PositionList* pList = createPositionList();
 
-	int i = 0;
+	/*int i = 0;
 	int elements = 10;
 	while (i < elements) {
 		add(pList, i * 2, i);
 		i++;
-	}
+	}*/
 
-	add(pList, 89, 0);
+	//add(pList, 89, 0);
 
-	add(pList, 99, 11);
+	//add(pList, 99, 11);
 
-	add(pList, 109, 6);
+	//add(pList, 109, 6);
 
 	//cout << element(pList, 12);
 
@@ -172,10 +288,21 @@ int main()
 	//PositionList* p = clone(pList);
 
 	//erase(pList, 0);
-	erase(pList, 4);
+	//erase(pList, 4);
 	//erase(pList, 12);
 
-	display(pList);
+	//display(pList);
+
+	SortedIntList* sl = new SortedIntList();
+
+	add(sl, 8);
+	add(sl, 4);
+	add(sl, 5);
+	add(sl, 10);
+	add(sl, 12);
+	add(sl, 13);
+
+	display(sl);
 
 	return 0;
 }
