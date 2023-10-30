@@ -1,3 +1,8 @@
 ﻿  Queue.cpp
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Queue\Queue.cpp(179,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Queue\Queue.cpp(202,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Queue\Queue.cpp(218,21): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Queue\Queue.cpp(55): warning C4715: 'first': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Queue\Queue.cpp(197): warning C4715: 'priorityBeginning': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Queue\Queue.cpp(191): warning C4715: 'beginning': no todas las rutas de acceso de control devuelven un valor
   Queue.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Queue.exe
