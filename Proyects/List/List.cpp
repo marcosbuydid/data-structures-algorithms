@@ -280,18 +280,18 @@ void deleteNodeAB(NodeAB* &tree, int e) {
 	}
 }
 
-NodeAB* nodeInAB(NodeAB* root, int x) {
+bool nodeInAB(NodeAB* root, int x) {
 	if (root == NULL) {
-		return NULL;
+		return false;
 	}
 	if (root->data == x) {
-		return root;
+		return true;
 	}
 	else if (x < root->data) {
-		nodeInAB(root->left, x);
+		return nodeInAB(root->left, x);
 	}
 	else if (x > root->data) {
-		nodeInAB(root->right, x);
+		return nodeInAB(root->right, x);
 	}
 }
 

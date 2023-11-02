@@ -1,6 +1,6 @@
 ﻿  List.cpp
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\List\List.cpp(93): warning C4715: 'element': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\List\List.cpp(296): warning C4715: 'nodeInAB': no todas las rutas de acceso de control devuelven un valor
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\List\List.cpp(368): warning C4715: 'minimum': no todas las rutas de acceso de control devuelven un valor
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\List\List.cpp(374): warning C4715: 'maximum': no todas las rutas de acceso de control devuelven un valor
-C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\List\List.cpp(296): warning C4715: 'nodeInAB': no todas las rutas de acceso de control devuelven un valor
   List.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\List.exe
