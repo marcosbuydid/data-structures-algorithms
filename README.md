@@ -11,6 +11,9 @@ You will find different proyects with a specific topic to practice or learn.
 
 ## Proyect Folders
 
+### Dictionary
+Contains one or multiple abstract representations of a Dictionary.
+
 ### Essentials
 Contains various examples about arrays, structures, pointers, functions and more.
 
