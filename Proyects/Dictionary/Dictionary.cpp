@@ -78,16 +78,16 @@ void displayData(NodeList* l) {
 /*End of auxiliary methods */
 
 IntDictionary* createIntDictionary(unsigned int quantity) {
-	IntDictionary* id = new IntDictionary();
-	id->capacity = quantity;
-	id->elementQuantity = 0;
-	id->table = new NodeList * [quantity];
+	IntDictionary* dictionary = new IntDictionary();
+	dictionary->capacity = quantity;
+	dictionary->elementQuantity = 0;
+	dictionary->table = new NodeList * [quantity];
 
 	//initialize the table
 	for (int i = 0;i < quantity;i++) {
-		id->table[i] = NULL;
+		dictionary->table[i] = NULL;
 	}
-	return id;
+	return dictionary;
 }
 
 bool isEmpty(IntDictionary* dictionary) {
@@ -144,12 +144,12 @@ void erase(IntDictionary*& dictionary, int e) {
 	}
 }
 
-int element(IntDictionary*& id) {
-	if (!isEmpty(id)) {
+int element(IntDictionary*& dictionary) {
+	if (!isEmpty(dictionary)) {
 		//return the first element found
-		for (int i = 0; i < id->capacity; i++) {
-			if (id->table[i] != NULL) {
-				return id->table[i]->data;
+		for (int i = 0; i < dictionary->capacity; i++) {
+			if (dictionary->table[i] != NULL) {
+				return dictionary->table[i]->data;
 			}
 		}
 	}
