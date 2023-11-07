@@ -3,7 +3,7 @@
 using namespace std;
 
 /*
-* IntDictionary using a pointer to a pointer of a LinkedList
+* IntDictionary using a pointer to a pointer of a NodeList
 * and two variables, capacity and elementQuantity.
 * Add, erase and belongs operations are made in O(1) on average.
 * Open hashing is used with module operation suited as hash function.
@@ -16,7 +16,7 @@ struct NodeList {
 };
 
 struct IntDictionary {
-	NodeList** table;
+	NodeList** keys;
 	unsigned int capacity;
 	unsigned int elementQuantity;
 };
@@ -24,7 +24,7 @@ struct IntDictionary {
 /*Auxiliary methods */
 
 int modHash(int element, int capacity) {
-	//capacidad must be prime
+	//capacity should be prime
 	int position = element % capacity;
 	if (position < 0) {
 		position = position * -1;
@@ -81,11 +81,11 @@ IntDictionary* createIntDictionary(unsigned int quantity) {
 	IntDictionary* dictionary = new IntDictionary();
 	dictionary->capacity = quantity;
 	dictionary->elementQuantity = 0;
-	dictionary->table = new NodeList * [quantity];
+	dictionary->keys = new NodeList* [quantity];
 
 	//initialize the table
 	for (int i = 0;i < quantity;i++) {
-		dictionary->table[i] = NULL;
+		dictionary->keys[i] = NULL;
 	}
 	return dictionary;
 }
@@ -103,8 +103,8 @@ bool belongs(IntDictionary* dictionary, int e) {
 		return false;
 	}
 	else {
-		int elementPositionOnTable = modHash(e, dictionary->capacity);
-		NodeList* aux = dictionary->table[elementPositionOnTable];
+		int elementKey = modHash(e, dictionary->capacity);
+		NodeList* aux = dictionary->keys[elementKey];
 		while (aux != NULL) {
 			if (aux->data == e) {
 				return true;
@@ -116,17 +116,17 @@ bool belongs(IntDictionary* dictionary, int e) {
 }
 
 void add(IntDictionary*& dictionary, int e) {
-	int elementPositonOnTable = modHash(e, dictionary->capacity);
+	int elementKey = modHash(e, dictionary->capacity);
 	if (!belongs(dictionary, e)) {
-		addElement(dictionary->table[elementPositonOnTable], e);
+		addElement(dictionary->keys[elementKey], e);
 		dictionary->elementQuantity++;
 	}
 }
 
 void erase(IntDictionary*& dictionary, int e) {
-	int elementPositionOnTable = modHash(e, dictionary->capacity);
+	int elementKey = modHash(e, dictionary->capacity);
 	if (belongs(dictionary, e)) {
-		NodeList* actualNode = dictionary->table[elementPositionOnTable];
+		NodeList* actualNode = dictionary->keys[elementKey];
 		NodeList* previousNode = NULL;
 
 		while (actualNode != NULL && actualNode->data != e) {
@@ -137,7 +137,7 @@ void erase(IntDictionary*& dictionary, int e) {
 			previousNode->next = actualNode->next;
 		}
 		else {
-			dictionary->table[elementPositionOnTable] = actualNode->next;
+			dictionary->keys[elementKey] = actualNode->next;
 			delete actualNode;
 		}
 		dictionary->elementQuantity--;
@@ -148,8 +148,8 @@ int element(IntDictionary*& dictionary) {
 	if (!isEmpty(dictionary)) {
 		//return the first element found
 		for (int i = 0; i < dictionary->capacity; i++) {
-			if (dictionary->table[i] != NULL) {
-				return dictionary->table[i]->data;
+			if (dictionary->keys[i] != NULL) {
+				return dictionary->keys[i]->data;
 			}
 		}
 	}
@@ -162,7 +162,7 @@ IntDictionary* clone(IntDictionary* dictionary) {
 	}
 	else {
 		for (int i = 0; i < dictionary->capacity; i++) {
-			clonedDictionary->table[i] = cloneList(dictionary->table[i]);
+			clonedDictionary->keys[i] = cloneList(dictionary->keys[i]);
 		}
 		clonedDictionary->elementQuantity = dictionary->elementQuantity;
 		return clonedDictionary;
@@ -171,9 +171,9 @@ IntDictionary* clone(IntDictionary* dictionary) {
 
 void destroy(IntDictionary*& dictionary) {
 	for (int i = 0; i < dictionary->capacity; i++) {
-		destroyList(dictionary->table[i]);
+		destroyList(dictionary->keys[i]);
 	}
-	delete dictionary->table;
+	delete dictionary->keys;
 	dictionary->capacity = 0;
 	dictionary->elementQuantity = 0;
 }
@@ -182,7 +182,7 @@ void display(IntDictionary*& id) {
 	if (!isEmpty(id)) {
 		for (int i = 0; i < id->capacity; i++) {
 			cout << i << "-";
-			displayData(id->table[i]);
+			displayData(id->keys[i]);
 		}
 	}
 }
@@ -190,7 +190,7 @@ void display(IntDictionary*& id) {
 
 int main() {
 
-	IntDictionary* d = createIntDictionary(10);
+	IntDictionary* d = createIntDictionary(13);
 	add(d, 987654329);
 	add(d, 987456123);
 	add(d, 123098564);
