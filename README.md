@@ -32,5 +32,8 @@ Contains basic examples about recursion.
 ### Stack
 Contains one or multiple abstract representations of a Stack.
 
+### Table
+Contains one or multiple abstract representations of a Table.
+
 ### Trees
 Contains multiple algorithms of how to operate with most common trees.

@@ -3,7 +3,7 @@
 using namespace std;
 
 /*
-* PositionList using dinamic array, a variable maxSize,
+* PositionList using a dinamic array, a variable maxSize,
 * and a variable top.
 * Element and numberOfElements operations are made in
 * constant order in the worst case.
@@ -149,8 +149,8 @@ void display(PositionList* pl) {
 }
 
 /*
-* SortedIntList using a binary search tree pointer 
-* and a variable elementQuantity.
+* SortedIntList using a binary search tree and 
+* a variable elementQuantity.
 * Add, erase, exists operations are made in O(log2n) 
 * in average and numberOfElements in O(1).
 * Implementation is unbounded.

@@ -3,7 +3,7 @@
 using namespace std;
 
 /*
-* IntDictionary using a pointer to a pointer of a NodeList
+* IntDictionary using a double pointer to a LinkedList
 * and two variables, capacity and elementQuantity.
 * Add, erase and belongs operations are made in O(1) on average.
 * Open hashing is used with module operation suited as hash function.

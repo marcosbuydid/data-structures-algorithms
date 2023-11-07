@@ -3,8 +3,8 @@
 using namespace std;
 
 /*
-* QueueList using a LinkedList with two pointers
-* front and back and a variable elementQuantity.
+* QueueList using two LinkedList front and back,
+* and a variable elementQuantity.
 * Enqueue, first, dequeue and numberOfElements
 * operations are made in constant order in the worst case.
 * Implementation is unbounded.

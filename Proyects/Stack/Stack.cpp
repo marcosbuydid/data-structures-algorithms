@@ -3,7 +3,7 @@
 using namespace std;
 
 /*
-* IntStack using LinkedList and a variable elementQuantity.
+* IntStack using a LinkedList and a variable elementQuantity.
 * Push, Top, Pop and numberOfEelements operations are made
 * in constant order in the worst case.
 * Implementation is unbounded.
