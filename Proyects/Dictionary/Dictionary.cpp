@@ -3,8 +3,8 @@
 using namespace std;
 
 /*
-* IntDictionary using a double pointer to a LinkedList
-* and two variables, capacity and elementQuantity.
+* IntDictionary using a double pointer called keys and two variables,
+* capacity and elementQuantity.
 * Add, erase and belongs operations are made in O(1) on average.
 * Open hashing is used with module operation suited as hash function.
 * Implementation is unbounded.
@@ -178,11 +178,12 @@ void destroy(IntDictionary*& dictionary) {
 	dictionary->elementQuantity = 0;
 }
 
-void display(IntDictionary*& id) {
-	if (!isEmpty(id)) {
-		for (int i = 0; i < id->capacity; i++) {
+void display(IntDictionary* dictionary) {
+	if (!isEmpty(dictionary)) {
+		for (int i = 0; i < dictionary->capacity; i++) {
 			cout << i << "-";
-			displayData(id->keys[i]);
+			displayData(dictionary->keys[i]);
+			cout << endl;
 		}
 	}
 }

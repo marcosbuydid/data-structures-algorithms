@@ -3,7 +3,7 @@
 using namespace std;
 
 /*
-* QueueList using two LinkedList front and back,
+* IntQueue using two pointers called front and back
 * and a variable elementQuantity.
 * Enqueue, first, dequeue and numberOfElements
 * operations are made in constant order in the worst case.
@@ -112,7 +112,7 @@ void display(IntQueue* q) {
 }
 
 /*
-* PriorityQueueList using two dinamic arrays and
+* PriorityIntQueue using two dinamic arrays and
 * a variable elementQuantity.
 * Implementation is bounded.
 */
