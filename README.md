@@ -26,6 +26,9 @@ Contains multiple algorithms of how to operate with linked lists.
 ### List
 Contains one or multiple abstract representations of a List.
 
+### Multiset
+Contains one or multiple abstract representations of a Multiset.
+
 ### Recursion
 Contains basic examples about recursion.
 
