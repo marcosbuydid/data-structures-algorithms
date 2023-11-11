@@ -14,7 +14,7 @@ struct NodeList {
 };
 
 struct IntMultiset {
-	NodeList* set;
+	NodeList* container;
 	unsigned int elementQuantity;
 };
 
@@ -61,15 +61,8 @@ NodeList* cloneList(NodeList* l) {
 }
 
 void destroyList(NodeList*& list) {
-	if (list == NULL) {
-		return;
-	}
-	else {
-		while (list != NULL) {
-			NodeList* nodeToDelete = list;
-			list = list->next;
-			delete nodeToDelete;
-		}
+	if (list != NULL) {
+		destroyList(list->next);
 		delete list;
 		list = NULL;
 	}
@@ -79,7 +72,7 @@ void destroyList(NodeList*& list) {
 
 IntMultiset* createIntMultiset() {
 	IntMultiset* m = new IntMultiset();
-	m->set = NULL;
+	m->container = NULL;
 	m->elementQuantity = 0;
 	return m;
 }
@@ -93,7 +86,7 @@ void add(IntMultiset*& m, int e, unsigned int occurrences) {
 		m = createIntMultiset();
 	}
 	while (occurrences > 0) {
-		addOrdered(m->set, e);
+		addOrdered(m->container, e);
 		m->elementQuantity++;
 		occurrences--;
 	}
@@ -104,8 +97,8 @@ bool belongs(IntMultiset* m, int e) {
 		return false;
 	}
 	else {
-		while (m->set != NULL) {
-			NodeList* aux = m->set;
+		NodeList* aux = m->container;
+		while (aux != NULL) {
 			if (aux->data == e) {
 				return true;
 			}
@@ -117,14 +110,14 @@ bool belongs(IntMultiset* m, int e) {
 
 void erase(IntMultiset*& m, int e) {
 	if (belongs(m, e)) {
-		eraseElement(m->set, e);
+		eraseElement(m->container, e);
 		m->elementQuantity--;
 	}
 }
 
 int element(IntMultiset* m) {
 	if (!isEmpty(m)) {
-		NodeList* aux = m->set;
+		NodeList* aux = m->container;
 		while (aux != NULL) {
 			if (aux->data != NULL) {
 				return aux->data;
@@ -142,34 +135,36 @@ IntMultiset* unionSet(IntMultiset* m1, IntMultiset* m2) {
 
 	IntMultiset* result = createIntMultiset();
 
-	NodeList* iteratorM1 = m1->set;
-	NodeList* iteratorM2 = m2->set;
+	NodeList* iteratorM1 = m1->container;
+	NodeList* iteratorM2 = m2->container;
 
 	while (iteratorM1 != NULL && iteratorM2 != NULL) {
 		if (iteratorM1->data == iteratorM2->data) {
+			addOrdered(result->container, iteratorM1->data);
+			result->elementQuantity++;
 			iteratorM1 = iteratorM1->next;
 			iteratorM2 = iteratorM2->next;
 		}
 		else if (iteratorM1->data < iteratorM2->data) {
-			addOrdered(result->set, iteratorM1->data);
+			addOrdered(result->container, iteratorM1->data);
 			iteratorM1 = iteratorM1->next;
 			result->elementQuantity++;
 		}
 		else {
-			addOrdered(result->set, iteratorM2->data);
+			addOrdered(result->container, iteratorM2->data);
 			iteratorM2 = iteratorM2->next;
 			result->elementQuantity++;
 		}
 	}
 
 	while (iteratorM1 != NULL) {
-		addOrdered(result->set, iteratorM1->data);
+		addOrdered(result->container, iteratorM1->data);
 		iteratorM1 = iteratorM1->next;
 		result->elementQuantity++;
 	}
 
 	while (iteratorM2 != NULL) {
-		addOrdered(result->set, iteratorM2->data);
+		addOrdered(result->container, iteratorM2->data);
 		iteratorM2 = iteratorM2->next;
 		result->elementQuantity++;
 	}
@@ -180,12 +175,12 @@ IntMultiset* intersectionSet(IntMultiset* m1, IntMultiset* m2) {
 
 	IntMultiset* result = createIntMultiset();
 
-	NodeList* iteratorM1 = m1->set;
-	NodeList* iteratorM2 = m2->set;
+	NodeList* iteratorM1 = m1->container;
+	NodeList* iteratorM2 = m2->container;
 
 	while (iteratorM1 != NULL && iteratorM2 != NULL) {
 		if (iteratorM1->data == iteratorM2->data) {
-			addOrdered(result->set, iteratorM1->data);
+			addOrdered(result->container, iteratorM1->data);
 			result->elementQuantity++;
 			iteratorM1 = iteratorM1->next;
 			iteratorM2 = iteratorM2->next;
@@ -204,8 +199,8 @@ IntMultiset* differenceSet(IntMultiset* m1, IntMultiset* m2) {
 
 	IntMultiset* result = createIntMultiset();
 
-	NodeList* iteratorM1 = m1->set;
-	NodeList* iteratorM2 = m2->set;
+	NodeList* iteratorM1 = m1->container;
+	NodeList* iteratorM2 = m2->container;
 
 	while (iteratorM1 != NULL && iteratorM2 != NULL) {
 		if (iteratorM1->data == iteratorM2->data) {
@@ -213,7 +208,7 @@ IntMultiset* differenceSet(IntMultiset* m1, IntMultiset* m2) {
 			iteratorM2 = iteratorM2->next;
 		}
 		else if (iteratorM1->data < iteratorM2->data) {
-			addOrdered(result->set, iteratorM1->data);
+			addOrdered(result->container, iteratorM1->data);
 			result->elementQuantity++;
 			iteratorM1 = iteratorM1->next;
 		}
@@ -227,8 +222,8 @@ IntMultiset* differenceSet(IntMultiset* m1, IntMultiset* m2) {
 bool containedIn(IntMultiset* m1, IntMultiset* m2) {
 	IntMultiset* intersection = intersectionSet(m1, m2);
 
-	NodeList* iteratorM1 = m1->set;
-	NodeList* intersectionIterator = intersection->set;
+	NodeList* iteratorM1 = m1->container;
+	NodeList* intersectionIterator = intersection->container;
 
 	while (iteratorM1 != NULL && intersectionIterator != NULL) {
 		if (iteratorM1->data == intersectionIterator->data) {
@@ -248,21 +243,21 @@ IntMultiset* clone(IntMultiset* m) {
 		return multisetClone;
 	}
 	else {
-		multisetClone->set = cloneList(m->set);
+		multisetClone->container = cloneList(m->container);
 		multisetClone->elementQuantity = m->elementQuantity;
 		return multisetClone;
 	}
 }
 
 void destroy(IntMultiset*& m) {
-	destroyList(m->set);
+	destroyList(m->container);
 	delete m;
 	m = NULL;
 }
 
 void display(IntMultiset* m) {
 	if (!isEmpty(m)) {
-		NodeList* aux = m->set;
+		NodeList* aux = m->container;
 		while (aux != NULL) {
 			cout << aux->data << " ";
 			aux = aux->next;
@@ -296,7 +291,7 @@ int main() {
 
 	IntMultiset* differenceSetResult = differenceSet(multiset1, multiset2);
 
-	//display(unionSetResult);
+	display(unionSetResult);
 
 	//display(intersectionSetResult);
 
@@ -304,7 +299,7 @@ int main() {
 
 	IntMultiset* cloneM3 = clone(multiset3);
 
-	display(cloneM3);
+	//display(cloneM3);
 
 	return 0;
 }
