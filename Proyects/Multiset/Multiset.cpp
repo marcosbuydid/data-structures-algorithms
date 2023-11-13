@@ -255,6 +255,13 @@ void destroy(IntMultiset*& m) {
 	m = NULL;
 }
 
+IntMultiset* Xor(IntMultiset* m1, IntMultiset* m2) {
+	IntMultiset* diffM1M2 = differenceSet(m1, m2);
+	IntMultiset* diffM2M1 = differenceSet(m2, m1);
+
+	return unionSet(diffM2M1, diffM1M2);
+}
+
 void display(IntMultiset* m) {
 	if (!isEmpty(m)) {
 		NodeList* aux = m->container;
@@ -285,21 +292,37 @@ int main() {
 	add(multiset3, 6, 2);
 	add(multiset3, 8, 2);
 
-	IntMultiset* unionSetResult = unionSet(multiset1, multiset2);
+	IntMultiset* multiset4 = createIntMultiset();
+	add(multiset4, 1, 1);
+	add(multiset4, 3, 1);
+	add(multiset4, 4, 1);
+	add(multiset4, 7, 1);
 
-	IntMultiset* intersectionSetResult = intersectionSet(multiset1, multiset2);
+	IntMultiset* multiset5 = createIntMultiset();
+	add(multiset5, 8, 1);
+	add(multiset5, 1, 1);
+	add(multiset5, 2, 1);
+	add(multiset5, 3, 1);
 
-	IntMultiset* differenceSetResult = differenceSet(multiset1, multiset2);
+	//IntMultiset* unionSetResult = unionSet(multiset1, multiset2);
 
-	display(unionSetResult);
+	//IntMultiset* intersectionSetResult = intersectionSet(multiset1, multiset2);
+
+	//IntMultiset* differenceSetResult = differenceSet(multiset1, multiset2);
+
+	//display(unionSetResult);
 
 	//display(intersectionSetResult);
 
-	bool result = containedIn(multiset1, multiset3);
+	//bool result = containedIn(multiset1, multiset3);
 
-	IntMultiset* cloneM3 = clone(multiset3);
+	//IntMultiset* cloneM3 = clone(multiset3);
 
 	//display(cloneM3);
+
+	IntMultiset* XOR = Xor(multiset4, multiset5);
+
+	display(XOR);
 
 	return 0;
 }
