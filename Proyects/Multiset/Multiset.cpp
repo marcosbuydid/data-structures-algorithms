@@ -216,6 +216,19 @@ IntMultiset* differenceSet(IntMultiset* m1, IntMultiset* m2) {
 			iteratorM2 = iteratorM2->next;
 		}
 	}
+
+	while (iteratorM1 != NULL) {
+		addOrdered(result->container, iteratorM1->data);
+		iteratorM1 = iteratorM1->next;
+		result->elementQuantity++;
+	}
+
+	while (iteratorM2 != NULL) {
+		addOrdered(result->container, iteratorM2->data);
+		iteratorM2 = iteratorM2->next;
+		result->elementQuantity++;
+	}
+
 	return result;
 }
 
@@ -285,42 +298,17 @@ int main() {
 	add(multiset2, 2, 1);
 	add(multiset2, 3, 2);
 
-	IntMultiset* multiset3 = createIntMultiset();
-	add(multiset3, 1, 4);
-	add(multiset3, 2, 2);
-	add(multiset3, 4, 2);
-	add(multiset3, 6, 2);
-	add(multiset3, 8, 2);
+	IntMultiset* unionSetResult = unionSet(multiset1, multiset2);
 
-	IntMultiset* multiset4 = createIntMultiset();
-	add(multiset4, 1, 1);
-	add(multiset4, 3, 1);
-	add(multiset4, 4, 1);
-	add(multiset4, 7, 1);
+	IntMultiset* intersectionSetResult = intersectionSet(multiset1, multiset2);
 
-	IntMultiset* multiset5 = createIntMultiset();
-	add(multiset5, 8, 1);
-	add(multiset5, 1, 1);
-	add(multiset5, 2, 1);
-	add(multiset5, 3, 1);
+	IntMultiset* differenceSetResult = differenceSet(multiset1, multiset2);
 
-	//IntMultiset* unionSetResult = unionSet(multiset1, multiset2);
+	bool result = containedIn(multiset1, multiset2);
 
-	//IntMultiset* intersectionSetResult = intersectionSet(multiset1, multiset2);
+	IntMultiset* cloneM3 = clone(multiset2);
 
-	//IntMultiset* differenceSetResult = differenceSet(multiset1, multiset2);
-
-	//display(unionSetResult);
-
-	//display(intersectionSetResult);
-
-	//bool result = containedIn(multiset1, multiset3);
-
-	//IntMultiset* cloneM3 = clone(multiset3);
-
-	//display(cloneM3);
-
-	IntMultiset* XOR = Xor(multiset4, multiset5);
+	IntMultiset* XOR = Xor(multiset1, multiset2);
 
 	display(XOR);
 
