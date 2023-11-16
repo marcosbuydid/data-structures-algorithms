@@ -11,6 +11,9 @@ You will find different proyects with a specific topic to practice or learn.
 
 ## Proyect Folders
 
+### Custom-ADT
+Contains multiple examples using customs abstract data types.
+
 ### Dictionary
 Contains one or multiple abstract representations of a Dictionary.
 

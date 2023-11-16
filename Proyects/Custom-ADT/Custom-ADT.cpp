@@ -95,8 +95,7 @@ void enqueueAux(WorkShopNode* &head, WorkShopNode* &last, WorkShopNode* node) {
 }
 
 bool isEmpty(WorkShopWaitingList* wwl) {
-    return wwl->headNoInsuranceCarList == NULL &&
-        wwl->headInsuranceCarList == NULL;
+    return wwl->headInsuranceCarList == NULL;
 }
 
 void enqueueWithPriority(WorkShopWaitingList*& wwl, int carNumber, Priority p) {
@@ -146,7 +145,7 @@ void destroy(WorkShopWaitingList*& wwl) {
     destroyList(wwl->lastInsuranceCarList);
 }
 
-void display(WorkShopWaitingList*& wwl) {
+void display(WorkShopWaitingList* wwl) {
     if (!isEmpty(wwl)) {
         WorkShopNode* iterator = wwl->headNoInsuranceCarList;
         while (iterator != NULL) {
@@ -163,7 +162,16 @@ void display(WorkShopWaitingList*& wwl) {
     }
 }
 
-
+unsigned int carWaitingList(WorkShopWaitingList* wwl) {
+    if (!isEmpty(wwl)) {
+        int quantity = 0;
+        while (!isEmpty(wwl)) {
+            dequeue(wwl);
+            quantity++;
+        }
+        return quantity;
+    }
+}
 
 int main() {
     
@@ -182,6 +190,8 @@ int main() {
     //cout << biggerPriority(wwlClone);
 
     //destroy(wwlClone);
+
+    //cout << carWaitingList(wwlClone);
 
     display(wwlClone);
 
