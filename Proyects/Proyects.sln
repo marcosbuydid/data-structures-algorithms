@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Table", "Table\Table.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Multiset", "Multiset\Multiset.vcxproj", "{9A5603BA-10B2-4A0D-A180-FE1681A50E7F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Custom-ADT", "Custom-ADT\Custom-ADT.vcxproj", "{3DB70BC3-9033-4629-B401-8D87F89A1BD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -111,6 +113,14 @@ Global
 		{9A5603BA-10B2-4A0D-A180-FE1681A50E7F}.Release|x64.Build.0 = Release|x64
 		{9A5603BA-10B2-4A0D-A180-FE1681A50E7F}.Release|x86.ActiveCfg = Release|Win32
 		{9A5603BA-10B2-4A0D-A180-FE1681A50E7F}.Release|x86.Build.0 = Release|Win32
+		{3DB70BC3-9033-4629-B401-8D87F89A1BD7}.Debug|x64.ActiveCfg = Debug|x64
+		{3DB70BC3-9033-4629-B401-8D87F89A1BD7}.Debug|x64.Build.0 = Debug|x64
+		{3DB70BC3-9033-4629-B401-8D87F89A1BD7}.Debug|x86.ActiveCfg = Debug|Win32
+		{3DB70BC3-9033-4629-B401-8D87F89A1BD7}.Debug|x86.Build.0 = Debug|Win32
+		{3DB70BC3-9033-4629-B401-8D87F89A1BD7}.Release|x64.ActiveCfg = Release|x64
+		{3DB70BC3-9033-4629-B401-8D87F89A1BD7}.Release|x64.Build.0 = Release|x64
+		{3DB70BC3-9033-4629-B401-8D87F89A1BD7}.Release|x86.ActiveCfg = Release|Win32
+		{3DB70BC3-9033-4629-B401-8D87F89A1BD7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

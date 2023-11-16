@@ -1,0 +1,3 @@
+﻿  Custom-ADT.cpp
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Custom-ADT\Custom-ADT.cpp(122): warning C4715: 'biggerPriority': no todas las rutas de acceso de control devuelven un valor
+  Custom-ADT.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Custom-ADT.exe
