@@ -1,0 +1,3 @@
+﻿  Multiset.cpp
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Multiset\Multiset.cpp(128): warning C4715: 'element': no todas las rutas de acceso de control devuelven un valor
+  Multiset.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Multiset.exe

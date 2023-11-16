@@ -1,0 +1,8 @@
+﻿  Dictionary.cpp
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Dictionary\Dictionary.cpp(87,19): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Dictionary\Dictionary.cpp(150,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Dictionary\Dictionary.cpp(164,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Dictionary\Dictionary.cpp(173,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Dictionary\Dictionary.cpp(183,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Dictionary\Dictionary.cpp(156): warning C4715: 'element': no todas las rutas de acceso de control devuelven un valor
+  Dictionary.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Dictionary.exe
