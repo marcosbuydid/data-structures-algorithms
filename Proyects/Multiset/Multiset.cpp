@@ -118,11 +118,8 @@ void erase(IntMultiset*& m, int e) {
 int element(IntMultiset* m) {
 	if (!isEmpty(m)) {
 		NodeList* aux = m->container;
-		while (aux != NULL) {
-			if (aux->data != NULL) {
-				return aux->data;
-			}
-			aux = aux->next;
+		if (aux != NULL) {
+			return aux->data;
 		}
 	}
 }
