@@ -1,7 +1,8 @@
 ﻿  Custom-ADT.cpp
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Custom-ADT\Custom-ADT.cpp(121): warning C4715: 'biggerPriority': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Custom-ADT\Custom-ADT.cpp(174): warning C4715: 'carWaitingList': no todas las rutas de acceso de control devuelven un valor
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Custom-ADT\Custom-ADT.cpp(252): warning C4715: 'createCommentManagement': no todas las rutas de acceso de control devuelven un valor
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Custom-ADT\Custom-ADT.cpp(302): warning C4715: 'recentArticle': no todas las rutas de acceso de control devuelven un valor
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Custom-ADT\Custom-ADT.cpp(308): warning C4715: 'recentText': no todas las rutas de acceso de control devuelven un valor
-C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Custom-ADT\Custom-ADT.cpp(174): warning C4715: 'carWaitingList': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Custom-ADT\Custom-ADT.cpp(472): warning C4715: 'findAuthor': no todas las rutas de acceso de control devuelven un valor
   Custom-ADT.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Custom-ADT.exe

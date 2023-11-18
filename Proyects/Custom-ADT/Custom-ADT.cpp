@@ -326,6 +326,177 @@ void destroy(CommentManagement*& cm) {
 	cm->maxCommentsThreshold = 0;
 }
 
+/*ADT BookShop using a binary search tree.
+* addBook, searchAuthor and returnBook operations are made
+* with O(log(n)) in average.
+* Implementation is unbounded.
+*/
+
+struct BookNode {
+	char* title;
+	char* author;
+	unsigned int copies;
+	unsigned int onLoan;
+	BookNode* left;
+	BookNode* right;
+};
+
+struct BookShop {
+	BookNode* books;
+	unsigned int numberOfBooks;
+};
+
+/* Auxiliary methods */
+void addBookToBookShop(BookNode*& bookshop, char* title, char* author, unsigned int copies) {
+
+	BookNode* t = bookshop;
+	BookNode* p;
+	BookNode* r = NULL;
+
+	// bookshop is empty
+	if (bookshop == NULL) {
+		p = new BookNode();
+		p->title = title;
+		p->author = author;
+		p->copies = copies;
+		p->onLoan = 0;
+		p->left = NULL;
+		p->right = NULL;
+		bookshop = p;
+		return;
+	}
+
+	while (t != NULL) {
+		r = t;
+		if (title > t->title) {
+			t = t->left;
+		}
+		else if (title < t->title) {
+			t = t->right;
+		}
+		else {
+			return;
+		}
+	}
+
+	//Now t points at NULL and 
+	//r points at insert location
+
+	p = new BookNode();
+	p->title = title;
+	p->author = author;
+	p->copies = copies;
+	p->onLoan = 0;
+	p->left = NULL;
+	p->right = NULL;
+
+	if (title > r->title) {
+		r->left = p;
+	}
+	else {
+		r->right = p;
+	}
+}
+
+BookNode* bookOnBookShop(BookNode* b, char* title) {
+	if (b == NULL) {
+		return NULL;
+	}
+	else if (b->title == title) {
+		return b;
+	}
+	else if (title < b->title) {
+		return bookOnBookShop(b->right, title);
+	}
+	else {
+		return bookOnBookShop(b->left, title);
+	}
+}
+
+char* bookAuthor(BookNode* b, char* title) {
+	if (b == NULL) {
+		return NULL;
+	}
+	else if (b->title == title) {
+		return b->author;
+	}
+	else if (title < b->title) {
+		return bookAuthor(b->right, title);
+	}
+	else {
+		return bookAuthor(b->left, title);
+	}
+}
+/* End of auxiliary methods */
+
+BookShop* createBookShop() {
+	BookShop* bs = new BookShop();
+	bs->books = NULL;
+	bs->numberOfBooks = 0;
+	return bs;
+}
+
+bool isEmpty(BookShop* bs) {
+	return bs->numberOfBooks == 0;
+}
+
+bool exists(BookShop* bs, char* title) {
+	if (isEmpty(bs)) {
+		return false;
+	}
+	else {
+		BookNode* b = bookOnBookShop(bs->books, title);
+		if (b != NULL) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
+void addBook(BookShop*& bs, char* title, char* author, unsigned int copies) {
+	if (isEmpty(bs)) {
+		bs = createBookShop();
+	}
+	if (!exists(bs, title)) {
+		addBookToBookShop(bs->books, title, author, copies);
+		bs->numberOfBooks++;
+	}
+}
+
+char* findAuthor(BookShop* bs, char* title) {
+	if (exists(bs, title)) {
+		return bookAuthor(bs->books, title);
+	}
+}
+
+void borrowBook(BookShop* bs, char* title) {
+	if (exists(bs, title)) {
+		BookNode* book = bookOnBookShop(bs->books, title);
+		if (book->copies > book->onLoan) {
+			book->copies--;
+			book->onLoan++;
+		}
+	}
+}
+
+void returnBook(BookShop* bs, char* title) {
+	if (exists(bs, title)) {
+		BookNode* book = bookOnBookShop(bs->books, title);
+		if (book->copies < book->onLoan) {
+			book->copies++;
+			book->onLoan--;
+		}
+	}
+}
+
+int numberOfBooks(BookShop*& bs) {
+	return bs->numberOfBooks;
+}
+
+
+
 int main() {
 
 	WorkShopWaitingList* wwl = createWorkShopWaitingList();
@@ -366,6 +537,33 @@ int main() {
 
 	destroy(cm);
 
+
+	BookShop* bs = createBookShop();
+
+	char title1[11] = "Clean Code";
+	char title2[26] = "Practical C++ Programming";
+	char title3[12] = "Refactoring";
+	char title4[16] = "C++ Primer Plus";
+
+	char author1[16] = "Robert C Martin";
+	char author2[15] = "Steve Oualline";
+	char author3[16] = "Martin Fowler";
+	char author4[14] = "Stephen Prata";
+
+	addBook(bs, title1, author1, 4);
+	addBook(bs, title2, author2, 2);
+	addBook(bs, title3, author3, 1);
+	addBook(bs, title4, author4, 3);
+
+	//cout << findAuthor(bs, title4);
+
+	//cout << bs->numberOfBooks;
+
+	borrowBook(bs, title3);
+	
+	returnBook(bs, title3);
+
+	
 	return 0;
 }
 
