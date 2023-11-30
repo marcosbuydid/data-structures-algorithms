@@ -4,6 +4,24 @@ C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(15
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(204,21): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(215,20): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(225,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(386,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(396,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(463,18): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(464,18): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(466,18): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(468,20): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(469,18): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(473,24): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(474,24): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(476,24): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(478,25): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(479,23): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(483,24): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(484,25): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(486,25): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(488,26): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(489,25): warning C4305: 'argumento': truncamiento de 'double' a 'float'
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(161): warning C4715: 'element': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(366): warning C4715: 'recover': no todas las rutas de acceso de control devuelven un valor
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Table\Table.cpp(175): warning C4715: 'recover': no todas las rutas de acceso de control devuelven un valor
   Table.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Table.exe
