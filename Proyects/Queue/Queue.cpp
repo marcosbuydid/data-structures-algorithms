@@ -222,6 +222,205 @@ void display(PriorityIntQueue* pq) {
 	}
 }
 
+
+/*
+* PriorityIntQueue using a Binary Search Tree and
+* a variable elementQuantity.
+* Implementation is unbounded.
+*/
+
+struct QueueNode {
+	int data;
+	unsigned int priority;
+	QueueNode* left;
+	QueueNode* right;
+};
+
+struct PriorityQueue {
+	QueueNode* elements;
+	unsigned int elementQuantity;
+};
+
+/* Auxiliary methods*/
+
+void insertNode(QueueNode*& root, int data, unsigned int priority) {
+
+	QueueNode* t = root;
+	QueueNode* p;
+	QueueNode* r = NULL;
+
+	// root is empty
+	if (root == NULL) {
+		p = new QueueNode();
+		p->data = data;
+		p->priority = priority;
+		p->left = NULL;
+		p->right = NULL;
+		root = p;
+		return;
+	}
+
+	while (t != NULL) {
+		r = t;
+		if (priority < t->priority) {
+			t = t->left;
+		}
+		else if (priority > t->priority) {
+			t = t->right;
+		}
+		else {
+			return;
+		}
+	}
+
+	// Now t points at NULL and r points at insert location
+	p = new QueueNode();
+	p->data = data;
+	p->priority = priority;
+	p->left = NULL;
+	p->right = NULL;
+
+	if (priority < r->priority) {
+		r->left = p;
+	}
+	else {
+		r->right = p;
+	}
+}
+
+bool elementDefined(QueueNode* r, unsigned int p) {
+	if (r == NULL) {
+		return false;
+	}
+	if (r->priority == p) {
+		return true;
+	}
+	if (p < r->priority) {
+		return elementDefined(r->left, p);
+	}
+	else {
+		return elementDefined(r->right, p);
+	}
+}
+
+unsigned int maxPriority(QueueNode* r) {
+
+	if (r == NULL) {
+		return 0;
+	}
+	else {
+		while (r->right != NULL) {
+			r = r->right;
+			return r->right->priority;
+		}
+	}
+}
+
+void deleteNode(QueueNode*& root, unsigned int p) {
+	if (root != NULL) {
+		if (p < root->priority) {
+			deleteNode(root->left, p);
+		}
+		else if (p > root->priority) {
+			deleteNode(root->right, p);
+		}
+		else {
+			//node with priority p is found
+			if (root->left == NULL) {
+				QueueNode* nodeToDelete = root;
+				root = root->right;
+				delete nodeToDelete;
+			}
+			else if (root->right == NULL) {
+				QueueNode* nodeToDelete = root;
+				root = root->left;
+				delete nodeToDelete;
+			}
+			else {
+				unsigned int max = maxPriority(root->left);
+				root->priority = max;
+				deleteNode(root->left, max);
+			}
+		}
+	}
+}
+
+QueueNode* clone(QueueNode* r) {
+	if (r == NULL) {
+		return NULL;
+	}
+	else {
+		QueueNode* clonedNode = new QueueNode();
+		clonedNode->data = r->data;
+		clonedNode->priority = r->priority;
+		clonedNode->left = clone(r->left);
+		clonedNode->right = clone(r->right);
+		return clonedNode;
+	}
+}
+
+void displayData(QueueNode* r) {
+	if (r != NULL) {
+		displayData(r->left);
+		cout << r->data << "|" << r->priority << flush;
+		cout << endl;
+		displayData(r->right);
+	}
+}
+
+/* End of auxiliary methods*/
+
+PriorityQueue* createQueue() {
+	PriorityQueue* pq = new PriorityQueue();
+	pq->elements = NULL;
+	pq->elementQuantity = 0;
+	return pq;
+}
+
+bool insertElement(PriorityQueue* &pq, int e, unsigned int p) {
+	if (!elementDefined(pq->elements, p)) {
+		insertNode(pq->elements, e, p);
+		pq->elementQuantity++;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool isEmpty(PriorityQueue* pq) {
+	return pq->elementQuantity == 0;
+}
+
+unsigned int deleteElement(PriorityQueue* &pq) {
+	if (!isEmpty(pq)) {
+		unsigned int maxPriorityValue = maxPriority(pq->elements);
+		deleteNode(pq->elements, maxPriorityValue);
+		pq->elementQuantity--;
+		return maxPriorityValue;
+	}
+}
+
+unsigned int numberOfElements(PriorityQueue* pq) {
+	return pq->elementQuantity;
+}
+
+PriorityQueue* clone(PriorityQueue* pq) {
+	PriorityQueue* clonedQueue = createQueue();
+	if (isEmpty(pq)) {
+		return clonedQueue;
+	}
+	else {
+		clonedQueue->elements = clone(pq->elements);
+		clonedQueue->elementQuantity = pq->elementQuantity;
+		return clonedQueue;
+	}
+}
+
+void display(PriorityQueue* pq) {
+	displayData(pq->elements);
+}
+
 int main() {
 
 	//IntQueue* iq = createIntQueue();
@@ -266,7 +465,18 @@ int main() {
 	
 	//destroy(pq);
 
-	display(pq);
+	//display(pq);
+
+	PriorityQueue* p = createQueue();
+
+	insertElement(p, 1, 4);
+	insertElement(p, 3, 5);
+	insertElement(p, 5, 9);
+	insertElement(p, 7, 1);
+
+	//cout << deleteElement(p);
+
+	display(p);
 
 	return 0;
 }
