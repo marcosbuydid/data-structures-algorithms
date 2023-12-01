@@ -105,6 +105,89 @@ void display(IntStack* s) {
 	cout << endl;
 }
 
+/*
+* Custom IntStack using a pointer.
+  Implementation is unbounded.
+*/
+
+struct CustomIntStack {
+	NodeList* elements;
+	unsigned int elementQuantity;
+};
+
+CustomIntStack* createCustomIntStack() {
+	CustomIntStack* cs = new CustomIntStack();
+	cs->elements = NULL;
+	cs->elementQuantity = 0;
+	return cs;
+}
+
+void insertElement(int x, CustomIntStack* &cs) {
+	NodeList* node = new NodeList();
+	node->data = x;
+	node->next = cs->elements;
+	cs->elements = node;
+	cs->elementQuantity++;
+}
+
+bool isEmpty(CustomIntStack* cs) {
+	return cs->elementQuantity == 0;
+}
+
+int deleteElement(CustomIntStack*& cs) {
+	if (!isEmpty(cs)) {
+		int data = cs->elements->data;
+		NodeList* nodeToDelete = cs->elements;
+		cs->elements = cs->elements->next;
+		delete nodeToDelete;
+		cs->elementQuantity--;
+		return data;
+	}
+}
+
+void destroyStack(CustomIntStack*& cs) {
+	if (!isEmpty(cs)) {
+		NodeList* iterator = cs->elements;
+		while (iterator != NULL) {
+			NodeList* nodeToDelete = iterator;
+			iterator = iterator->next;
+			delete nodeToDelete;
+			cs->elementQuantity--;
+		}
+	}
+	delete cs;
+}
+
+void display(CustomIntStack* c) {
+	NodeList* iterator = c->elements;
+	while (iterator != NULL) {
+		cout << iterator->data << " ";
+		iterator = iterator->next;
+	}
+	cout << endl;
+}
+
+void deleteRepeated(CustomIntStack*& s) {
+	if (!isEmpty(s)) {
+		CustomIntStack* auxStack = createCustomIntStack();
+		int auxElement = 0;
+		bool firstRun = false;
+		while (!isEmpty(s)) {
+			int lastElement = deleteElement(s);
+			if(auxElement != lastElement){
+				auxElement = lastElement;
+				insertElement(auxElement, auxStack);
+			}
+			else{
+				lastElement = deleteElement(s);
+			}
+		}
+		while (!isEmpty(auxStack)) {
+			insertElement(deleteElement(auxStack), s);
+		}
+	}
+}
+
 
 int main()
 {
@@ -124,6 +207,17 @@ int main()
 
 	IntStack* clonedStack = clone(s);
 
-	display(clonedStack);
+	CustomIntStack* c = createCustomIntStack();
+	insertElement(1, c);
+	insertElement(1, c);
+	insertElement(1, c);
+	insertElement(2, c);
+	insertElement(3, c);
+
+	deleteRepeated(c);
+
+	display(c);
+
+	//display(clonedStack);
 }
 
