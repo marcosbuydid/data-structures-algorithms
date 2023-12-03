@@ -35,6 +35,9 @@ Contains one or multiple abstract representations of a Multiset.
 ### Recursion
 Contains basic examples about recursion.
 
+### Set
+Contains one or multiple abstract representations of a Set.
+
 ### Stack
 Contains one or multiple abstract representations of a Stack.
 

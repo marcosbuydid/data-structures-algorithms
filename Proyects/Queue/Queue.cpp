@@ -311,8 +311,8 @@ unsigned int maxPriority(QueueNode* r) {
 	else {
 		while (r->right != NULL) {
 			r = r->right;
-			return r->right->priority;
 		}
+		return r->priority;
 	}
 }
 
@@ -474,7 +474,7 @@ int main() {
 	insertElement(p, 5, 9);
 	insertElement(p, 7, 1);
 
-	//cout << deleteElement(p);
+	cout << deleteElement(p);
 
 	display(p);
 

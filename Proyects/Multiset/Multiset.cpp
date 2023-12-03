@@ -283,6 +283,254 @@ void display(IntMultiset* m) {
 	}
 }
 
+/*
+* IntMultiset using a Binary Search Tree and a variable
+* elementQuantity.
+* Implementation is unbounded.
+*/
+
+struct MultisetNode {
+	int data;
+	unsigned int occurrences;
+	MultisetNode* left;
+	MultisetNode* right;
+};
+
+struct CustomIntMultiset {
+	MultisetNode* container;
+	unsigned int elementQuantity;
+	int maxValue;
+	int minValue;
+};
+
+/* Auxiliary Methods */
+
+void insertNode(MultisetNode*& root, int data, unsigned int occurrences) {
+
+	MultisetNode* t = root;
+	MultisetNode* p;
+	MultisetNode* r = NULL;
+
+	// root is empty
+	if (root == NULL) {
+		p = new MultisetNode();
+		p->data = data;
+		p->occurrences = occurrences;
+		p->left = NULL;
+		p->right = NULL;
+		root = p;
+		return;
+	}
+
+	if (root->data == data) {
+		root->occurrences += occurrences;
+	}
+
+	while (t != NULL) {
+		r = t;
+		if (data < t->data) {
+			t = t->left;
+		}
+		else if (data > t->data) {
+			t = t->right;
+		}
+		else {
+			return;
+		}
+	}
+
+	// Now t points at NULL and r points at insert location
+	p = new MultisetNode();
+	p->data = data;
+	p->occurrences = occurrences;
+	p->left = NULL;
+	p->right = NULL;
+
+	if (data < r->data) {
+		r->left = p;
+	}
+	else {
+		r->right = p;
+	}
+}
+
+MultisetNode* searchNode(MultisetNode* m, int x) {
+	if (m == NULL) {
+		return NULL;
+	}
+	else if (m->data == x) {
+		return m;
+	}
+	else if (x < m->data) {
+		return searchNode(m->left, x);
+	}
+	else {
+		return searchNode(m->right, x);
+	}
+}
+
+int minimumNode(MultisetNode* m) {
+	if (m != NULL) {
+		while (m->left != NULL) {
+			m = m->left;
+		}
+		return m->data;
+	}
+}
+
+int maximumNode(MultisetNode* m) {
+	if (m != NULL) {
+		while (m->right != NULL) {
+			m = m->right;
+		}
+		return m->data;
+	}
+}
+
+void deleteNode(MultisetNode*& root, int x) {
+	if (root != NULL) {
+		if (x < root->data) {
+			deleteNode(root->left, x);
+		}
+		else if (x > root->data) {
+			deleteNode(root->right, x);
+		}
+		else {
+			if (root->left == NULL) {
+				MultisetNode* nodeToDelete = root;
+				root = root->right;
+				delete nodeToDelete;
+			}
+			else if (root->right == NULL) {
+				MultisetNode* nodeToDelete = root;
+				root = root->left;
+				delete nodeToDelete;
+			}
+			else {
+				unsigned int max = maximumNode(root->left);
+				root->data = max;
+				deleteNode(root->left, max);
+			}
+		}
+	}
+}
+
+void displayData(MultisetNode* n) {
+	if (n != NULL) {
+		displayData(n->left);
+		cout << n->data << "|" << n->occurrences << flush;
+		cout << endl;
+		displayData(n->right);
+	}
+}
+
+/* End of Auxiliary Methods*/
+
+CustomIntMultiset* createCustomIntMultiset() {
+	CustomIntMultiset* cm = new CustomIntMultiset();
+	cm->container = NULL;
+	cm->elementQuantity = 0;
+	cm->minValue = INT_MAX;
+	cm->maxValue = INT_MIN;
+	return cm;
+}
+
+void insert(CustomIntMultiset* &cm, int x, unsigned int n) {
+	insertNode(cm->container, x, n);
+
+	if (x < cm->minValue) {
+		cm->minValue = x;
+	}
+	if (x > cm->maxValue) {
+		cm->maxValue = x;
+	}
+	cm->elementQuantity++;
+}
+
+unsigned int numberOfElements(CustomIntMultiset* cm) {
+	return cm->elementQuantity;
+}
+
+bool isEmpty(CustomIntMultiset* cm) {
+	return cm->elementQuantity == 0;
+}
+
+unsigned int occurrences(CustomIntMultiset* cm, int x) {
+	if (isEmpty(cm)) {
+		return 0;
+	}
+	else {
+		MultisetNode* node = searchNode(cm->container, x);
+		if (node == NULL) {
+			return 0;
+		}
+		else {
+			return node->occurrences;
+		}
+	}
+}
+
+void deleteOcurrence(CustomIntMultiset*& cm, int x, unsigned int n) {
+	if (occurrences(cm, x) <= n) {
+		deleteNode(cm->container, x);
+		cm->minValue = minimumNode(cm->container);
+		cm->maxValue = maximumNode(cm->container);
+		cm->elementQuantity--;
+	}
+	else {
+		MultisetNode* node = searchNode(cm->container, x);
+		if (node != NULL) {
+			node->occurrences -= n;
+		}
+	}
+}
+
+int minimum(CustomIntMultiset* cm) {
+	if (!isEmpty(cm)) {
+		return cm->minValue;
+	}
+}
+
+int maximum(CustomIntMultiset* cm) {
+	if (!isEmpty(cm)) {
+		return cm->maxValue;
+	}
+}
+
+void display(CustomIntMultiset* cm) {
+	displayData(cm->container);
+}
+
+void clearOutMultiset(CustomIntMultiset* &cm) {
+	while (!isEmpty(cm)) {
+		int minimumNodeValue = minimum(cm);
+		int nodeOccurrence = occurrences(cm, minimumNodeValue);
+		deleteOcurrence(cm, minimumNodeValue, nodeOccurrence);
+	}
+}
+
+bool areSimilars(CustomIntMultiset* cm1, CustomIntMultiset* cm2) {
+
+	bool result = false;
+
+	while (!isEmpty(cm1) && !isEmpty(cm2)) {
+		int minimumNodeValueCm1 = minimum(cm1);
+		int minimumNodeValueCm2 = minimum(cm2);
+		int nodeOccurrenceCm1 = occurrences(cm1, minimumNodeValueCm1);
+		int nodeOccurrenceCm2 = occurrences(cm2, minimumNodeValueCm2);
+
+		if (minimumNodeValueCm1 == minimumNodeValueCm2 &&
+			nodeOccurrenceCm1 == nodeOccurrenceCm2) {
+			result = true;
+		}
+		deleteOcurrence(cm1, minimumNodeValueCm1, nodeOccurrenceCm1);
+		deleteOcurrence(cm2, minimumNodeValueCm1, nodeOccurrenceCm2);
+	}
+
+	return result;
+}
+
+
 int main() {
 
 	IntMultiset* multiset1 = createIntMultiset();
@@ -307,7 +555,46 @@ int main() {
 
 	IntMultiset* XOR = Xor(multiset1, multiset2);
 
-	display(XOR);
+	//display(XOR);
+
+	CustomIntMultiset* cm = createCustomIntMultiset();
+
+	insert(cm, 1, 4);
+	insert(cm, 1, 10);
+	insert(cm, 3, 21);
+	insert(cm, 12, 43);
+	insert(cm, 7, 14);
+
+	//cout << occurrences(cm, 12);
+
+	//cout << maximum(cm);
+
+	//cout << minimum(cm);
+
+	//deleteOcurrence(cm, 12, 6);
+
+	//deleteOcurrence(cm, 3, 21);
+
+	//clearOutMultiset(cm);
+
+	CustomIntMultiset* cm1 = createCustomIntMultiset();
+	insert(cm1, 1, 4);
+	insert(cm1, 2, 2);
+	insert(cm1, 4, 2);
+
+	CustomIntMultiset* cm2 = createCustomIntMultiset();
+	insert(cm2, 1, 1);
+	insert(cm2, 2, 1);
+	insert(cm2, 3, 2);
+
+	CustomIntMultiset* cm3 = createCustomIntMultiset();
+	insert(cm3, 1, 4);
+	insert(cm3, 2, 2);
+	insert(cm3, 4, 2);
+
+	cout << areSimilars(cm1,cm3);
+
+	//display(cm);
 
 	return 0;
 }

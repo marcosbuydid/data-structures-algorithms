@@ -1,0 +1,6 @@
+﻿  Set.cpp
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Set\Set.cpp(80,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Set\Set.cpp(118,27): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Set\Set.cpp(131,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Set\Set.cpp(127): warning C4715: 'minimum': no todas las rutas de acceso de control devuelven un valor
+  Set.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Set.exe
