@@ -185,6 +185,93 @@ void deleteRepeated(CustomIntStack*& s) {
 	}
 }
 
+/*Custom Stack using one pointer and a 
+* variable elementQuantity.
+* Push, pop, top, isEmpty and isFull are
+* made in O(1) in the worst case.
+* Implementation is bounded.
+*/
+
+struct StackNode {
+	int data;
+	StackNode* next;
+};
+
+struct CustomStack {
+	StackNode* elements;
+	unsigned int elementQuantity;
+	unsigned int capacity;
+};
+
+CustomStack* create(unsigned int capacity) {
+	CustomStack* cs = new CustomStack();
+	cs->capacity = capacity;
+	cs->elementQuantity = 0;
+	cs->elements = NULL;
+	return cs;
+}
+
+bool isEmpty(CustomStack* cs) {
+	return cs->elementQuantity == 0;
+}
+
+bool isFull(CustomStack* cs) {
+	return cs->elementQuantity == cs->capacity;
+}
+
+void push(CustomStack*& cs, int e) {
+	if (!isFull(cs)) {
+		StackNode* node = new StackNode();
+		node->data = e;
+		node->next = cs->elements;
+		cs->elements = node;
+		cs->elementQuantity++;
+	}
+}
+
+int top(CustomStack* cs) {
+	if (!isEmpty(cs)) {
+		return cs->elements->data;
+	}
+}
+
+void pop(CustomStack*& cs) {
+	if (!isEmpty(cs)) {
+		StackNode* nodeToDelete = cs->elements;
+		cs->elements = cs->elements->next;
+		delete nodeToDelete;
+		cs->elementQuantity--;
+	}
+}
+
+void display(CustomStack* cs) {
+	StackNode* iterator = cs->elements;
+	while (iterator != NULL) {
+		cout << iterator->data << " ";
+		iterator = iterator->next;
+	}
+	cout << endl;
+}
+
+CustomStack* sortStack(CustomStack* cs) {
+	CustomStack* sortedStack = create(cs->capacity);
+	if (!isEmpty(cs)) {
+		while (!isEmpty(cs)) {
+			int element = top(cs);
+			pop(cs);
+			while (!isEmpty(sortedStack) && top(sortedStack) < element) {
+				push(cs, top(sortedStack));
+				pop(sortedStack);
+			}
+			push(sortedStack, element);
+		}
+		return sortedStack;
+	}
+	else {
+		return sortedStack;
+	}
+}
+
 
 int main()
 {
@@ -216,8 +303,27 @@ int main()
 
 	deleteRepeated(c);
 
-	display(c);
+	//display(c);
 
 	//display(clonedStack);
+
+	CustomStack* cs = create(10);
+	push(cs, 4);
+	push(cs, 7);
+	push(cs, 15);
+	push(cs, 2);
+	push(cs, 9);
+	push(cs, 3);
+	push(cs, 1);
+
+	//pop(cs);
+
+	//display(cs);
+
+	CustomStack* sortedStack = sortStack(cs);
+
+	display(sortedStack);
+
+	return 0;
 }
 
