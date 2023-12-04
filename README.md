@@ -11,6 +11,9 @@ You will find different proyects with a specific topic to practice or learn.
 
 ## Proyect Folders
 
+### Custom-ADT
+Contains multiple examples using customs abstract data types.
+
 ### Dictionary
 Contains one or multiple abstract representations of a Dictionary.
 
@@ -31,6 +34,9 @@ Contains one or multiple abstract representations of a Multiset.
 
 ### Recursion
 Contains basic examples about recursion.
+
+### Set
+Contains one or multiple abstract representations of a Set.
 
 ### Stack
 Contains one or multiple abstract representations of a Stack.

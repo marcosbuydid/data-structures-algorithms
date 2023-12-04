@@ -1,3 +1,5 @@
 ﻿  Stack.cpp
 C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Stack\Stack.cpp(48): warning C4715: 'top': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Stack\Stack.cpp(146): warning C4715: 'deleteElement': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Stack\Stack.cpp(236): warning C4715: 'top': no todas las rutas de acceso de control devuelven un valor
   Stack.vcxproj -> C:\Users\Marcos\Documents\data-structures-algorithms\Proyects\Debug\Stack.exe

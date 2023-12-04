@@ -402,8 +402,160 @@ void display(SortedIntList* l) {
 	inOrder(l->list);
 }
 
-int main()
-{
+
+/*
+* IntList using two pointers and
+* a variable elementQuantity.
+* Create, insert, isEmpty, first and last 
+* operations are made in O(1) in the worst case.
+* Implementation is unbounded.
+*/
+
+struct NodeList {
+	int data;
+	NodeList* next;
+};
+
+struct IntList {
+	NodeList* first;
+	NodeList* last;
+	unsigned int elementQuantity;
+};
+
+IntList* createIntList() {
+	IntList* l = new IntList();
+	l->first = NULL;
+	l->last = NULL;
+	l->elementQuantity = 0;
+	return l;
+}
+
+bool isEmpty(IntList* l) {
+	return l->elementQuantity == 0;
+}
+
+void insert(int x, IntList* &l) {
+	
+	NodeList* node = new NodeList();
+	node->data = x;
+	node->next = NULL;
+	if (isEmpty(l)) {
+		l->first = node;
+		l->last = node;
+	}
+	else {
+		l->last->next = node;
+		l->last = node;
+	}
+	l->elementQuantity++;
+}
+
+int first(IntList* &l) {
+	if (!isEmpty(l)) {
+		int data = l->first->data;
+		NodeList* nodeToDelete = l->first;
+		l->first = l->first->next;
+		delete nodeToDelete;
+		l->elementQuantity--;
+		return data;
+	}
+}
+
+int last(IntList* &l) {
+	if (!isEmpty(l)) {
+		int data = l->last->data;
+		NodeList* aux = l->first;
+		while (aux->next != l->last && aux->next != NULL) {
+			aux = aux->next;
+		}
+		NodeList* nodeToDelete = l->last;
+		l->last = l->last->next;
+		delete nodeToDelete;
+		aux->next = NULL;
+		l->last = aux;
+		l->elementQuantity--;
+		return data;
+	}
+}
+
+IntList* cloneList(IntList* l) {
+	IntList* clonedList = createIntList();
+	NodeList* iterator = l->first;
+	while (iterator != NULL) {
+		insert(iterator->data, clonedList);
+		iterator = iterator->next;
+	}
+	clonedList->elementQuantity = l->elementQuantity;
+	return clonedList;
+}
+
+void destroyList(NodeList*& list) {
+	if (list != NULL) {
+		while (list != NULL) {
+			NodeList* nodeToDelete = list;
+			list = list->next;
+			delete nodeToDelete;
+		}
+	}
+	delete list;
+	list = NULL;
+}
+
+void destroy(IntList* &l) {
+	destroyList(l->first);
+	l->elementQuantity = 0;
+	delete l;
+}
+
+void display(IntList* l) {
+	NodeList* iterator = l->first;
+	while (iterator != NULL) {
+		cout << iterator->data << " ";
+		cout << endl;
+		iterator = iterator->next;
+	}
+}
+
+bool indistinct(IntList* l) {
+
+	if (isEmpty(l)) {
+		return false;
+	}
+	else {
+		IntList* cloneL1 = cloneList(l);
+		IntList* cloneL2 = cloneList(l);
+		IntList* lifoList = createIntList();
+		IntList* fifoList = createIntList();
+
+		while (!isEmpty(cloneL1)) {
+			int firstElement = first(cloneL1);
+			insert(firstElement, lifoList);
+		}
+
+		while (!isEmpty(cloneL2)) {
+			int lastElement = last(cloneL2);
+			insert(lastElement, fifoList);
+		}
+
+		while (!isEmpty(lifoList) && !isEmpty(fifoList)) {
+			int firstElementLifo = first(lifoList);
+			int firstElementFifo = first(fifoList);
+
+			if (firstElementLifo != firstElementFifo) {
+				return false;
+			}
+		}
+
+		destroy(cloneL1);
+		//destroy(cloneL2);
+		destroy(lifoList);
+		destroy(fifoList);
+
+		return true;
+	}
+}
+
+int main() {
 	//PositionList* pList = createPositionList();
 
 	/*int i = 0;
@@ -457,7 +609,31 @@ int main()
 
 	//destroy(sl);
 
-	display(sl);
+	//display(sl);
+
+	IntList* l = createIntList();
+	insert(4, l);
+	insert(3, l);
+	insert(10, l);
+	insert(6, l);
+	insert(8, l);
+
+	//cout << first(l);
+	//cout << last(l);
+
+	//IntList* clonedList = cloneList(l);
+	
+	//destroy(l);
+
+	display(l);
+
+	IntList* i = createIntList();
+	insert(1, i);
+	insert(2, i);
+	insert(2, i);
+	insert(1, i);
+
+	//cout << indistinct(i);
 
 	return 0;
 }
