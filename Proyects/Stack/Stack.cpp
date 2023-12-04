@@ -171,20 +171,17 @@ void deleteRepeated(CustomIntStack*& s) {
 	if (!isEmpty(s)) {
 		CustomIntStack* auxStack = createCustomIntStack();
 		int auxElement = 0;
-		bool firstRun = false;
 		while (!isEmpty(s)) {
 			int lastElement = deleteElement(s);
 			if(auxElement != lastElement){
 				auxElement = lastElement;
 				insertElement(auxElement, auxStack);
 			}
-			else{
-				lastElement = deleteElement(s);
-			}
 		}
 		while (!isEmpty(auxStack)) {
 			insertElement(deleteElement(auxStack), s);
 		}
+		destroyStack(auxStack);
 	}
 }
 
@@ -208,11 +205,14 @@ int main()
 	IntStack* clonedStack = clone(s);
 
 	CustomIntStack* c = createCustomIntStack();
-	insertElement(1, c);
-	insertElement(1, c);
-	insertElement(1, c);
-	insertElement(2, c);
+	insertElement(9, c);
+	insertElement(9, c);
+	insertElement(7, c);
+	insertElement(6, c);
 	insertElement(3, c);
+	insertElement(3, c);
+	insertElement(3, c);
+	insertElement(2, c);
 
 	deleteRepeated(c);
 

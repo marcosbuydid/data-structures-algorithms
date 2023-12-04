@@ -421,6 +421,139 @@ void display(PriorityQueue* pq) {
 	displayData(pq->elements);
 }
 
+/*
+* CustomIntQueue using two pointers called front and back
+* and a variable elementQuantity.
+* Implementation is unbounded.
+*/
+
+struct CustomQueueNode {
+	int data;
+	CustomQueueNode* next;
+};
+
+struct CustomIntQueue {
+	CustomQueueNode* front;
+	CustomQueueNode* back;
+	unsigned int elementQuantity;
+};
+
+CustomIntQueue* create() {
+	CustomIntQueue* cq = new CustomIntQueue();
+	cq->front = NULL;
+	cq->back = NULL;
+	cq->elementQuantity = 0;
+	return cq;
+}
+
+bool isEmpty(CustomIntQueue* cq) {
+	return cq->elementQuantity == 0;
+}
+
+void insert(int x, CustomIntQueue*& cq) {
+	CustomQueueNode* n = new CustomQueueNode();
+	n->data = x;
+	n->next = NULL;
+	if (isEmpty(cq)) {
+		cq->front = n;
+		cq->back = n;
+	}
+	else {
+		cq->back->next = n;
+		cq->back = n;
+	}
+	cq->elementQuantity++;
+}
+
+int deleteElement(CustomIntQueue*& cq) {
+	if (!isEmpty(cq)) {
+		int element = cq->front->data;
+		CustomQueueNode* nodeToDelete = cq->front;
+		cq->front = cq->front->next;
+		if (cq->front == NULL) {
+			cq->back = NULL;
+		}
+		delete nodeToDelete;
+		cq->elementQuantity--;
+		return element;
+	}
+}
+
+void destroyQueue(CustomIntQueue*& cq) {
+	if (!isEmpty(cq)) {
+		while (cq->front != NULL) {
+			CustomQueueNode* nodeToDelete = cq->front;
+			cq->front = cq->front->next;
+			delete nodeToDelete;
+			cq->elementQuantity--;
+		}
+	}
+	delete cq;
+}
+
+void display(CustomIntQueue* cq) {
+	if (!isEmpty(cq)) {
+		while (cq->front != NULL) {
+			cout << cq->front->data << " ";
+			cq->front = cq->front->next;
+		}
+		cout << endl;
+	}
+}
+
+int timesRepeated(CustomIntQueue*& c, int x) {
+	if (isEmpty(c)) {
+		return 0;
+	}
+	else {
+		int quantity = 0;
+		CustomIntQueue* auxQueue = create();
+		while (!isEmpty(c)) {
+			int lastElement = deleteElement(c);
+			if (lastElement == x) {
+				quantity++;
+			}
+			insert(lastElement, auxQueue);
+		}
+		while (!isEmpty(auxQueue)) {
+			int lastElement = deleteElement(auxQueue);
+			insert(lastElement, c);
+		}
+		destroyQueue(auxQueue);
+		return quantity;
+	}
+}
+
+bool deleteRepeatedElement(CustomIntQueue*& c, int x) {
+	if (isEmpty(c)) {
+		return false;
+	}
+	else {
+		CustomIntQueue* auxQueue = create();
+		int auxElement = 0;
+		int elementRepeated = INT_MIN;
+
+		if (timesRepeated(c, x) > 1) {
+			elementRepeated = x;
+
+			while (!isEmpty(c)) {
+				int lastElement = deleteElement(c);
+				if (lastElement != elementRepeated) {
+					insert(lastElement, auxQueue);
+				}
+			}
+			while (!isEmpty(auxQueue)) {
+				auxElement = deleteElement(auxQueue);
+				insert(auxElement, c);
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
 int main() {
 
 	//IntQueue* iq = createIntQueue();
@@ -474,9 +607,27 @@ int main() {
 	insertElement(p, 5, 9);
 	insertElement(p, 7, 1);
 
-	cout << deleteElement(p);
+	//cout << deleteElement(p);
 
-	display(p);
+	//display(p);
+
+	CustomIntQueue* cq = create();
+	insert(8, cq);
+	insert(3, cq);
+	insert(4, cq);
+	insert(3, cq);
+	insert(6, cq);
+	insert(7, cq);
+	insert(9, cq);
+	insert(3, cq);
+
+	//deleteElement(cq);
+
+	//destroyQueue(cq);
+
+	deleteRepeatedElement(cq,3);
+
+	display(cq);
 
 	return 0;
 }

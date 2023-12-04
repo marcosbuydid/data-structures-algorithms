@@ -435,13 +435,11 @@ bool isEmpty(IntList* l) {
 }
 
 void insert(int x, IntList* &l) {
-	if (isEmpty(l)) {
-		l = createIntList();
-	}
+	
 	NodeList* node = new NodeList();
 	node->data = x;
 	node->next = NULL;
-	if (l->first == NULL) {
+	if (isEmpty(l)) {
 		l->first = node;
 		l->last = node;
 	}
@@ -466,9 +464,15 @@ int first(IntList* &l) {
 int last(IntList* &l) {
 	if (!isEmpty(l)) {
 		int data = l->last->data;
+		NodeList* aux = l->first;
+		while (aux->next != l->last && aux->next != NULL) {
+			aux = aux->next;
+		}
 		NodeList* nodeToDelete = l->last;
 		l->last = l->last->next;
 		delete nodeToDelete;
+		aux->next = NULL;
+		l->last = aux;
 		l->elementQuantity--;
 		return data;
 	}
@@ -509,6 +513,45 @@ void display(IntList* l) {
 		cout << iterator->data << " ";
 		cout << endl;
 		iterator = iterator->next;
+	}
+}
+
+bool indistinct(IntList* l) {
+
+	if (isEmpty(l)) {
+		return false;
+	}
+	else {
+		IntList* cloneL1 = cloneList(l);
+		IntList* cloneL2 = cloneList(l);
+		IntList* lifoList = createIntList();
+		IntList* fifoList = createIntList();
+
+		while (!isEmpty(cloneL1)) {
+			int firstElement = first(cloneL1);
+			insert(firstElement, lifoList);
+		}
+
+		while (!isEmpty(cloneL2)) {
+			int lastElement = last(cloneL2);
+			insert(lastElement, fifoList);
+		}
+
+		while (!isEmpty(lifoList) && !isEmpty(fifoList)) {
+			int firstElementLifo = first(lifoList);
+			int firstElementFifo = first(fifoList);
+
+			if (firstElementLifo != firstElementFifo) {
+				return false;
+			}
+		}
+
+		destroy(cloneL1);
+		//destroy(cloneL2);
+		destroy(lifoList);
+		destroy(fifoList);
+
+		return true;
 	}
 }
 
@@ -580,9 +623,17 @@ int main() {
 
 	//IntList* clonedList = cloneList(l);
 	
-	destroy(l);
+	//destroy(l);
 
 	display(l);
+
+	IntList* i = createIntList();
+	insert(1, i);
+	insert(2, i);
+	insert(2, i);
+	insert(1, i);
+
+	//cout << indistinct(i);
 
 	return 0;
 }
